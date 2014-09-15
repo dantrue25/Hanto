@@ -181,7 +181,8 @@ public class BetaHantoGame implements HantoGame {
 			break;
 		}
 		
-		turnNum++;
+		if(currentTurn == HantoPlayerColor.RED)
+			turnNum++;
 		
 		if(currentTurn == HantoPlayerColor.BLUE)
 			currentTurn = HantoPlayerColor.RED;

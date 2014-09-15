@@ -2,7 +2,6 @@ package hanto.test;
 
 import hanto.*;
 import hanto.common.*;
-import hanto.studentdbtrue.beta.*;
 import hanto.studentdbtrue.beta.BetaHantoGame;
 
 import org.junit.*;
@@ -105,7 +104,7 @@ public class BetaHantoMasterTest {
 	}
 
 	@Test
-	public void redMakesValidSecondMoveAndGameIsDrawn() throws HantoException
+	public void redMakesValidSecondMoveAndMoveIsOK() throws HantoException
 	{
 		game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 0));
 		final MoveResult mr = game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(-1, 1));
@@ -123,6 +122,40 @@ public class BetaHantoMasterTest {
 	public void attemptToMoveRatherThanPlace() throws HantoException
 	{
 		game.makeMove(BUTTERFLY, new TestHantoCoordinate(0, 1), new TestHantoCoordinate(0, 0));
+	}
+	
+	@Test(expected=HantoException.class)
+	public void attemptToNotPlayButterflyByFourthTurn() throws HantoException
+	{
+		game.makeMove(SPARROW, null, new TestHantoCoordinate(0, 0));   // Blue
+		game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 1)); // Red
+		game.makeMove(SPARROW, null, new TestHantoCoordinate(1, 1));   // Blue
+		game.makeMove(SPARROW, null, new TestHantoCoordinate(0, 2));   // Red
+		game.makeMove(SPARROW, null, new TestHantoCoordinate(0, 3));   // Blue
+		game.makeMove(SPARROW, null, new TestHantoCoordinate(0, 4));   // Red
+		game.makeMove(SPARROW, null, new TestHantoCoordinate(-1, 0));  // Blue
+	}
+	
+	@Test(expected=HantoException.class)
+	public void attemptToPlayTwoButterfly() throws HantoException
+	{
+		game.makeMove(SPARROW, null, new TestHantoCoordinate(0, 0));   // Blue
+		game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 1)); // Red
+		game.makeMove(SPARROW, null, new TestHantoCoordinate(1, 0));   // Blue
+		game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(1, 1)); // Red
+	}
+	
+	@Test
+	public void redWinsGame() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 0)); // Blue
+		game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 1)); // Red
+		game.makeMove(SPARROW, null, new TestHantoCoordinate(1, 0));   // Blue
+		game.makeMove(SPARROW, null, new TestHantoCoordinate(1, -1));  // Red
+		game.makeMove(SPARROW, null, new TestHantoCoordinate(0, -1));  // Blue
+		game.makeMove(SPARROW, null, new TestHantoCoordinate(-1, 0));  // Red
+		final MoveResult mr = game.makeMove(SPARROW, null, new TestHantoCoordinate(-1, 1));  // Losing move
+		assertEquals(MoveResult.RED_WINS, mr);
 	}
 
 }
