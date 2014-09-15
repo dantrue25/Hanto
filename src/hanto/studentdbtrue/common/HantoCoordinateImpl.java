@@ -1,4 +1,4 @@
-package hanto.studentdbtrue.alpha;
+package hanto.studentdbtrue.common;
 
 import hanto.common.HantoCoordinate;
 
@@ -49,22 +49,5 @@ public class HantoCoordinateImpl implements HantoCoordinate {
 		hash += 500*this.getX() + this.getY();
 		
 		return hash;
-	}
-	
-	public boolean isAdjacentTo(HantoCoordinate other) {
-		boolean isAdjacent;
-		int myX = getX();
-		int myY = getY();
-		int otherX = other.getX();
-		int otherY = other.getY();
-		
-		isAdjacent = (myX == otherX     && myY == otherY - 1)
-				  || (myX == otherX     && myY == otherY + 1)
-				  || (myX == otherX - 1 && myY == otherY    )
-				  || (myX == otherX + 1 && myY == otherY    )
-				  || (myX == otherX - 1 && myY == otherY + 1)
-				  || (myX == otherX + 1 && myY == otherY - 1);
-		
-		return isAdjacent;
 	}
 }

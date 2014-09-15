@@ -1,4 +1,4 @@
-package hanto.studentdbtrue.alpha;
+package hanto.studentdbtrue.common;
 
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
