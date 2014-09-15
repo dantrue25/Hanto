@@ -40,30 +40,6 @@ public class AlphaHantoMasterTest {
 			{
 				return y;
 			}
-			
-			public boolean equals( Object other ) {
-				boolean isEqual;
-				if( other == null ) {
-					isEqual = false;
-				}
-				else if( other instanceof TestHantoCoordinate ) {
-					isEqual = ( this.getX() == ((TestHantoCoordinate) other).getX()
-							 && this.getY() == ((TestHantoCoordinate) other).getY());
-				}
-				else {
-					isEqual = false;
-				}
-				
-				return isEqual;
-			}
-			
-			public int hashCode() {
-				int hash = 0;
-				
-				hash += 500*this.getX() + this.getY();
-				
-				return hash;
-			}
 		}
 
 		private static HantoGameFactory factory;
