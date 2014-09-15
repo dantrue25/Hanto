@@ -9,7 +9,7 @@ public class HantoPieceImpl implements HantoPiece {
 	private HantoPlayerColor color;
 	private HantoPieceType type;
 	
-	public HantoPieceImpl( HantoPlayerColor color, HantoPieceType type ) {
+	public HantoPieceImpl( HantoPieceType type, HantoPlayerColor color ) {
 		this.color = color;
 		this.type = type;
 	}
