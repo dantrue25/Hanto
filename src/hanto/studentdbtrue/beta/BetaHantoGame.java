@@ -56,6 +56,9 @@ public class BetaHantoGame implements HantoGame {
 					numBlueSpar--;
 				}
 			}
+			else if(board.get(to) != null) {
+				throw new HantoException("Piece already in that location.");
+			}
 			else if(turnNum == 4) {                                           // If 4th turn
 				if(blueButterfly == 1) {                                 // If player hasn't used butterfly
 					if(pieceType != HantoPieceType.BUTTERFLY) {          // If player isn't using butterfly by turn 4

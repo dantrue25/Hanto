@@ -154,8 +154,16 @@ public class BetaHantoMasterTest {
 		game.makeMove(SPARROW, null, new TestHantoCoordinate(1, -1));  // Red
 		game.makeMove(SPARROW, null, new TestHantoCoordinate(0, -1));  // Blue
 		game.makeMove(SPARROW, null, new TestHantoCoordinate(-1, 0));  // Red
-		final MoveResult mr = game.makeMove(SPARROW, null, new TestHantoCoordinate(-1, 1));  // Losing move
+		
+		// Losing move: blue's butterfly is trapped
+		final MoveResult mr = game.makeMove(SPARROW, null, new TestHantoCoordinate(-1, 1));
 		assertEquals(MoveResult.RED_WINS, mr);
 	}
 
+	@Test(expected=HantoException.class)
+	public void attemptToPutPieceOnTopOfOther() throws HantoException
+	{
+		game.makeMove(SPARROW, null, new TestHantoCoordinate(0, 0));   // Blue
+		game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 0)); // Red
+	}
 }
