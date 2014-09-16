@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
 package hanto.test;
 
 import hanto.*;
@@ -91,6 +101,7 @@ public class AlphaHantoMasterTest {
 			game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 0));
 			game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 1));
 			final HantoPiece p = game.getPieceAt(new TestHantoCoordinate(0, 1));
+			System.out.println(game.getPrintableBoard());
 			assertEquals(BUTTERFLY, p.getType());
 			assertEquals(RED, p.getColor());
 		}

@@ -26,28 +26,40 @@ public class HantoCoordinateImpl implements HantoCoordinate {
 	public int getY() {
 		return y;
 	}
-	
-	public boolean equals(Object other) {
-		boolean isEqual;
-		if( other == null ) {
-			isEqual = false;
-		}
-		else if(other instanceof HantoCoordinate) {
-			isEqual = ( this.getX() == ((HantoCoordinate) other).getX()
-					 && this.getY() == ((HantoCoordinate) other).getY());
-		}
-		else {
-			isEqual = false;
-		}
-		
-		return isEqual;
-	}
-	
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
 	public int hashCode() {
-		int hash = 0;
-		
-		hash += 500*this.getX() + this.getY();
-		
-		return hash;
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + x;
+		result = prime * result + y;
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof HantoCoordinateImpl)) {
+			return false;
+		}
+		HantoCoordinateImpl other = (HantoCoordinateImpl) obj;
+		if (x != other.x) {
+			return false;
+		}
+		if (y != other.y) {
+			return false;
+		}
+		return true;
 	}
 }

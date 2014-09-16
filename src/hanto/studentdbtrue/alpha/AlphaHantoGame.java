@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
 package hanto.studentdbtrue.alpha;
 
 import hanto.common.HantoCoordinate;
@@ -13,6 +23,8 @@ import hanto.studentdbtrue.common.HantoPieceImpl;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ */
 public class AlphaHantoGame implements HantoGame {
 
 	private Map<HantoCoordinate, HantoPiece> board = 
@@ -55,10 +67,12 @@ public class AlphaHantoGame implements HantoGame {
 		
 		HantoPiece p = new HantoPieceImpl( pieceType, currentTurn );
 		
-		if( currentTurn == HantoPlayerColor.BLUE)
+		if( currentTurn == HantoPlayerColor.BLUE) {
 			currentTurn = HantoPlayerColor.RED;
-		else
+		}
+		else {
 			currentTurn = HantoPlayerColor.BLUE;
+		}
 		
 		board.put(myTo, p);
 		
@@ -73,11 +87,16 @@ public class AlphaHantoGame implements HantoGame {
 		return board.get(myWhere);
 	}
 	
+	/**
+	 * Method isAdjacent.
+	 * @param loc HantoCoordinate
+	 * @return boolean
+	 */
 	public boolean isAdjacent(HantoCoordinate loc) {
-		HantoPiece adj1 = board.get(new HantoCoordinateImpl(loc.getX()    , loc.getY() - 1));
-		HantoPiece adj2 = board.get(new HantoCoordinateImpl(loc.getX()    , loc.getY() + 1));
-		HantoPiece adj3 = board.get(new HantoCoordinateImpl(loc.getX() - 1, loc.getY()    ));
-		HantoPiece adj4 = board.get(new HantoCoordinateImpl(loc.getX() + 1, loc.getY()    ));
+		HantoPiece adj1 = board.get(new HantoCoordinateImpl(loc.getX(), loc.getY() - 1));
+		HantoPiece adj2 = board.get(new HantoCoordinateImpl(loc.getX(), loc.getY() + 1));
+		HantoPiece adj3 = board.get(new HantoCoordinateImpl(loc.getX() - 1, loc.getY()));
+		HantoPiece adj4 = board.get(new HantoCoordinateImpl(loc.getX() + 1, loc.getY()));
 		HantoPiece adj5 = board.get(new HantoCoordinateImpl(loc.getX() - 1, loc.getY() + 1));
 		HantoPiece adj6 = board.get(new HantoCoordinateImpl(loc.getX() + 1, loc.getY() - 1));
 		
@@ -87,8 +106,12 @@ public class AlphaHantoGame implements HantoGame {
 
 	@Override
 	public String getPrintableBoard() {
-		// TODO Auto-generated method stub
-		return null;
+		String boardState = "";
+		for (HantoCoordinate key: board.keySet()) {
+		    HantoPiece p = board.get(key);
+			boardState += p.getColor().toString() + " " + p.getType().toString() + " at (" + key.getX() + ", " + key.getY() + ")\n"; 
+		}
+		return boardState;
 	}
 
 }
