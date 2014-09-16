@@ -294,6 +294,27 @@ public class BetaHantoMasterTest {
 	}
 	
 	@Test
+	public void useAllPieces() throws HantoException
+	{
+		gameRedFirst.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 0)); // Red
+		gameRedFirst.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 1)); // Blue
+		gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate(1, 0));   // Red
+		gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate(1, -1));  // Blue
+		gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate(0, -1));  // Red
+		gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate(-1, 0));  // Blue
+		gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate(0, 2));  // Red
+		gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate(0, 3));  // Blue
+		gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate(0, 4));  // Red
+		gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate(0, 5));  // Blue
+		
+		final MoveResult mrOk = gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate(0, 6));
+		final MoveResult mrDraw = gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate(0, 7));
+		assertEquals(OK, mrOk);
+		assertEquals(DRAW, mrDraw);
+		
+	}
+	
+	@Test
 	public void testTheEqualsFunctionInHantoCoordinateImpl() throws HantoException
 	{
 		HantoCoordinateImpl first = new HantoCoordinateImpl(0, 0);
