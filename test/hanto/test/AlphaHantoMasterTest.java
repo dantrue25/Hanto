@@ -77,7 +77,10 @@ public class AlphaHantoMasterTest {
 		public void blueMakesValidFirstMove() throws HantoException
 		{
 			final MoveResult mr = game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 0));
+			String boardState = game.getPrintableBoard();
+			
 			assertEquals(OK, mr);
+			assertEquals("BLUE Butterfly at (0, 0)\n", boardState);
 		}
 
 		@Test
@@ -101,7 +104,6 @@ public class AlphaHantoMasterTest {
 			game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 0));
 			game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 1));
 			final HantoPiece p = game.getPieceAt(new TestHantoCoordinate(0, 1));
-			System.out.println(game.getPrintableBoard());
 			assertEquals(BUTTERFLY, p.getType());
 			assertEquals(RED, p.getColor());
 		}
