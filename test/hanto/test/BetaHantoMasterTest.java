@@ -22,13 +22,22 @@ import static hanto.common.MoveResult.*;
 import static hanto.common.HantoPieceType.*;
 import static hanto.common.HantoPlayerColor.*;
 
+/**
+ */
 public class BetaHantoMasterTest {
 	
+	/**
+	 */
 	class TestHantoCoordinate implements HantoCoordinate
 	{
 		private final int x, y;
 
-		public TestHantoCoordinate(int x, int y)
+		/**
+		 * Constructor for TestHantoCoordinate.
+		 * @param x int
+		 * @param y int
+		 */
+		private TestHantoCoordinate(int x, int y)
 		{
 			this.x = x;
 			this.y = y;
@@ -52,16 +61,13 @@ public class BetaHantoMasterTest {
 		}
 	}
 
-	private static HantoGameFactory factory;
+	private static HantoGameFactory factory = HantoGameFactory.getInstance();
 	private HantoGame gameBlueFirst;
 	private HantoGame gameRedFirst;
 
-	@BeforeClass
-	public static void initializeClass()
-	{
-		factory = HantoGameFactory.getInstance();
-	}
-
+	/**
+	 * Method setup.
+	 */
 	@Before
 	public void setup()
 	{
@@ -69,12 +75,19 @@ public class BetaHantoMasterTest {
 		gameRedFirst = factory.makeHantoGame(HantoGameID.BETA_HANTO, HantoPlayerColor.RED);
 	}
 
+	/**
+	 * Method getABetaHantoGameFromTheFactory.
+	 */
 	@Test
 	public void getABetaHantoGameFromTheFactory()
 	{
 		assertTrue(gameBlueFirst instanceof BetaHantoGame);
 	}
 
+	/**
+	 * Method blueMakesValidFirstMoveButterfly.
+	 * @throws HantoException
+	 */
 	@Test
 	public void blueMakesValidFirstMoveButterfly() throws HantoException
 	{
@@ -82,6 +95,10 @@ public class BetaHantoMasterTest {
 		assertEquals(OK, mr);
 	}
 	
+	/**
+	 * Method redMakesValidFirstMoveButterfly.
+	 * @throws HantoException
+	 */
 	@Test
 	public void redMakesValidFirstMoveButterfly() throws HantoException
 	{
@@ -89,6 +106,10 @@ public class BetaHantoMasterTest {
 		assertEquals(OK, mr);
 	}
 	
+	/**
+	 * Method blueMakesValidFirstMoveSparrow.
+	 * @throws HantoException
+	 */
 	@Test
 	public void blueMakesValidFirstMoveSparrow() throws HantoException
 	{
@@ -97,6 +118,10 @@ public class BetaHantoMasterTest {
 		assertEquals("BLUE Sparrow at (0, 0)\n", gameState);
 	}
 	
+	/**
+	 * Method redMakesValidFirstMoveSparrow.
+	 * @throws HantoException
+	 */
 	@Test
 	public void redMakesValidFirstMoveSparrow() throws HantoException
 	{
@@ -105,6 +130,10 @@ public class BetaHantoMasterTest {
 		assertEquals("RED Sparrow at (0, 0)\n", gameState);
 	}
 
+	/**
+	 * Method afterFirstMoveBlueButterflyIsAt0_0.
+	 * @throws HantoException
+	 */
 	@Test
 	public void afterFirstMoveBlueButterflyIsAt0_0() throws HantoException
 	{
@@ -114,6 +143,10 @@ public class BetaHantoMasterTest {
 		assertEquals(BLUE, p.getColor());
 	}
 	
+	/**
+	 * Method afterFirstMoveRedButterflyIsAt0_0.
+	 * @throws HantoException
+	 */
 	@Test
 	public void afterFirstMoveRedButterflyIsAt0_0() throws HantoException
 	{
@@ -123,18 +156,30 @@ public class BetaHantoMasterTest {
 		assertEquals(RED, p.getColor());
 	}
 	
+	/**
+	 * Method blueAttemptsToPlaceButterflyAtWrongLocation.
+	 * @throws HantoException
+	 */
 	@Test(expected=HantoException.class)
 	public void blueAttemptsToPlaceButterflyAtWrongLocation() throws HantoException
 	{
 		gameBlueFirst.makeMove(BUTTERFLY, null, new TestHantoCoordinate(-1, 1));
 	}
 	
+	/**
+	 * Method redAttemptsToPlaceButterflyAtWrongLocation.
+	 * @throws HantoException
+	 */
 	@Test(expected=HantoException.class)
 	public void redAttemptsToPlaceButterflyAtWrongLocation() throws HantoException
 	{
 		gameRedFirst.makeMove(BUTTERFLY, null, new TestHantoCoordinate(-1, 1));
 	}
 	
+	/**
+	 * Method redMakesValidSecondMoveButterfly.
+	 * @throws HantoException
+	 */
 	@Test
 	public void redMakesValidSecondMoveButterfly() throws HantoException
 	{
@@ -143,6 +188,10 @@ public class BetaHantoMasterTest {
 		assertEquals(MoveResult.OK, mr);
 	}
 	
+	/**
+	 * Method blueMakesValidSecondMoveButterfly.
+	 * @throws HantoException
+	 */
 	@Test
 	public void blueMakesValidSecondMoveButterfly() throws HantoException
 	{
@@ -151,6 +200,10 @@ public class BetaHantoMasterTest {
 		assertEquals(MoveResult.OK, mr);
 	}
 	
+	/**
+	 * Method redMakesInvalidSecondMoveButterfly.
+	 * @throws HantoException
+	 */
 	@Test(expected=HantoException.class)
 	public void redMakesInvalidSecondMoveButterfly() throws HantoException
 	{
@@ -158,6 +211,10 @@ public class BetaHantoMasterTest {
 		gameBlueFirst.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 2));
 	}
 	
+	/**
+	 * Method blueMakesInvalidSecondMoveButterfly.
+	 * @throws HantoException
+	 */
 	@Test(expected=HantoException.class)
 	public void blueMakesInvalidSecondMoveButterfly() throws HantoException
 	{
@@ -165,18 +222,30 @@ public class BetaHantoMasterTest {
 		gameRedFirst.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 2));
 	}
 	
+	/**
+	 * Method attemptToMoveRatherThanPlaceBlue.
+	 * @throws HantoException
+	 */
 	@Test(expected=HantoException.class)
 	public void attemptToMoveRatherThanPlaceBlue() throws HantoException
 	{
 		gameBlueFirst.makeMove(BUTTERFLY, new TestHantoCoordinate(0, 1), new TestHantoCoordinate(0, 0));
 	}
 	
+	/**
+	 * Method attemptToMoveRatherThanPlaceRed.
+	 * @throws HantoException
+	 */
 	@Test(expected=HantoException.class)
 	public void attemptToMoveRatherThanPlaceRed() throws HantoException
 	{
 		gameRedFirst.makeMove(BUTTERFLY, new TestHantoCoordinate(0, 1), new TestHantoCoordinate(0, 0));
 	}
 	
+	/**
+	 * Method attemptToNotPlayButterflyByFourthTurnBlue.
+	 * @throws HantoException
+	 */
 	@Test(expected=HantoException.class)
 	public void attemptToNotPlayButterflyByFourthTurnBlue() throws HantoException
 	{
@@ -189,6 +258,10 @@ public class BetaHantoMasterTest {
 		gameBlueFirst.makeMove(SPARROW, null, new TestHantoCoordinate(-1, 0));  // Blue
 	}
 	
+	/**
+	 * Method attemptToNotPlayButterflyByFourthTurnRed.
+	 * @throws HantoException
+	 */
 	@Test(expected=HantoException.class)
 	public void attemptToNotPlayButterflyByFourthTurnRed() throws HantoException
 	{
@@ -201,6 +274,10 @@ public class BetaHantoMasterTest {
 		gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate(-1, 0)); 
 	}
 	
+	/**
+	 * Method playButterflyOnFourthTurnBlue.
+	 * @throws HantoException
+	 */
 	@Test
 	public void playButterflyOnFourthTurnBlue() throws HantoException
 	{
@@ -215,6 +292,10 @@ public class BetaHantoMasterTest {
 		assertEquals(OK, mr);
 	}
 	
+	/**
+	 * Method playButterflyOnFourthTurnRed.
+	 * @throws HantoException
+	 */
 	@Test
 	public void playButterflyOnFourthTurnRed() throws HantoException
 	{
@@ -229,6 +310,10 @@ public class BetaHantoMasterTest {
 		assertEquals(OK, mr);
 	}
 	
+	/**
+	 * Method attemptToPlayTwoButterflyBlue.
+	 * @throws HantoException
+	 */
 	@Test(expected=HantoException.class)
 	public void attemptToPlayTwoButterflyBlue() throws HantoException
 	{
@@ -238,6 +323,10 @@ public class BetaHantoMasterTest {
 		gameBlueFirst.makeMove(BUTTERFLY, null, new TestHantoCoordinate(1, 1)); // Red
 	}
 	
+	/**
+	 * Method attemptToPlayTwoButterflyRed.
+	 * @throws HantoException
+	 */
 	@Test(expected=HantoException.class)
 	public void attemptToPlayTwoButterflyRed() throws HantoException
 	{
@@ -247,6 +336,10 @@ public class BetaHantoMasterTest {
 		gameRedFirst.makeMove(BUTTERFLY, null, new TestHantoCoordinate(1, 1)); // Blue
 	}
 	
+	/**
+	 * Method redWinsGame.
+	 * @throws HantoException
+	 */
 	@Test
 	public void redWinsGame() throws HantoException
 	{
@@ -263,6 +356,10 @@ public class BetaHantoMasterTest {
 		assertEquals(MoveResult.RED_WINS, mr);
 	}
 	
+	/**
+	 * Method blueWinsGame.
+	 * @throws HantoException
+	 */
 	@Test
 	public void blueWinsGame() throws HantoException
 	{
@@ -279,6 +376,10 @@ public class BetaHantoMasterTest {
 		assertEquals(MoveResult.BLUE_WINS, mr);
 	}
 
+	/**
+	 * Method attemptToPutPieceOnTopOfOtherBlue.
+	 * @throws HantoException
+	 */
 	@Test(expected=HantoException.class)
 	public void attemptToPutPieceOnTopOfOtherBlue() throws HantoException
 	{
@@ -286,6 +387,10 @@ public class BetaHantoMasterTest {
 		gameBlueFirst.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 0)); // Red
 	}
 	
+	/**
+	 * Method attemptToPutPieceOnTopOfOtherRed.
+	 * @throws HantoException
+	 */
 	@Test(expected=HantoException.class)
 	public void attemptToPutPieceOnTopOfOtherRed() throws HantoException
 	{
@@ -293,6 +398,10 @@ public class BetaHantoMasterTest {
 		gameRedFirst.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 0)); // Blue
 	}
 	
+	/**
+	 * Method useAllPieces.
+	 * @throws HantoException
+	 */
 	@Test
 	public void useAllPieces() throws HantoException
 	{
@@ -314,8 +423,34 @@ public class BetaHantoMasterTest {
 		
 	}
 	
+	/**
+	 * Method bothLose.
+	 * @throws HantoException
+	 */
 	@Test
-	public void testTheEqualsFunctionInHantoCoordinateImpl() throws HantoException
+	public void bothLose() throws HantoException
+	{
+		gameRedFirst.makeMove(BUTTERFLY, null, new TestHantoCoordinate( 0,  0)); // Red
+		gameRedFirst.makeMove(BUTTERFLY, null, new TestHantoCoordinate(-1,  0)); // Blue
+		gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate  (-2,  1)); // Red
+		gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate  (-2,  0)); // Blue
+		gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate  (-1, -1)); // Red
+		gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate  ( 0, -1)); // Blue
+		gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate  ( 1, -1)); // Red
+		gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate  ( 1,  0)); // Blue
+		
+		final MoveResult mrOk = gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate(0, 1));
+		final MoveResult mrDraw = gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate(-1, 1));
+		assertEquals(OK, mrOk);
+		assertEquals(DRAW, mrDraw);
+		
+	}
+	
+	/**
+	 * Method testTheEqualsFunctionInHantoCoordinateImpl.
+	 */
+	@Test
+	public void testTheEqualsFunctionInHantoCoordinateImpl()
 	{
 		HantoCoordinateImpl first = new HantoCoordinateImpl(0, 0);
 		HantoCoordinateImpl diffInY = new HantoCoordinateImpl(0, 1);

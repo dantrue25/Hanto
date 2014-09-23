@@ -1,20 +1,41 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
 package hanto.studentdbtrue.common;
 
 import hanto.common.HantoCoordinate;
 
+/**
+ */
 public class HantoCoordinateImpl implements HantoCoordinate {
 	
 	private int x;
 	private int y;
 
+	/**
+	 * Constructor for HantoCoordinateImpl.
+	 * @param x int
+	 * @param y int
+	 */
 	public HantoCoordinateImpl(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
 	
+	/**
+	 * Constructor for HantoCoordinateImpl.
+	 * @param c HantoCoordinate
+	 */
 	public HantoCoordinateImpl(HantoCoordinate c) {
-		this.x = c.getX();
-		this.y = c.getY();
+		x = c.getX();
+		y = c.getY();
 	}
 	
 	@Override
@@ -27,9 +48,6 @@ public class HantoCoordinateImpl implements HantoCoordinate {
 		return y;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -39,9 +57,6 @@ public class HantoCoordinateImpl implements HantoCoordinate {
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {

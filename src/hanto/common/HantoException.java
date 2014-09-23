@@ -16,13 +16,9 @@ package hanto.common;
  * @author gpollice
  * @version Jan 12, 2013
  */
+@SuppressWarnings("serial")
 public class HantoException extends Exception
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	/**
 	 * Every instance of this exception must have a message describing the exception.
 	 * 

@@ -8,7 +8,10 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package hanto.studentdbtrue.alpha;
+package hanto.studentdbtrue.common;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
@@ -17,68 +20,39 @@ import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
-import hanto.studentdbtrue.common.HantoCoordinateImpl;
-import hanto.studentdbtrue.common.HantoPieceImpl;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
+ * @author Dan
+ *
  */
-public class AlphaHantoGame implements HantoGame {
+public abstract class BaseHantoGame implements HantoGame {
 
-	private Map<HantoCoordinate, HantoPiece> board = 
-	new HashMap<HantoCoordinate, HantoPiece>();
+	protected Map<HantoCoordinate, HantoPiece> board = 
+			new HashMap<HantoCoordinate, HantoPiece>();
+	protected HantoPlayerColor movesFirst;
+	protected HantoCoordinateImpl blueBLoc = null;
+	protected HantoCoordinateImpl redBLoc = null;
+	protected int turnNum = 1;
+	protected PlayerState bluePlayer = new PlayerState(HantoPlayerColor.BLUE);
+	protected PlayerState redPlayer = new PlayerState(HantoPlayerColor.RED);
+	protected PlayerState currentPlayer;
 	
-	private HantoPlayerColor currentTurn = HantoPlayerColor.BLUE;
-	
-	
+	/**
+	 * @throws HantoException 
+	 */
 	@Override
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
-	HantoCoordinate to) throws HantoException {
+			HantoCoordinate to) throws HantoException {
 		
-		MoveResult result = null;
-		HantoCoordinateImpl myTo = new HantoCoordinateImpl(to);
-		
-		if( pieceType != HantoPieceType.BUTTERFLY ) {
-			throw new HantoException( "Invalid piece" );
-		}
-		if( from != null ) {
-			throw new HantoException( "Cannot move piece" );
+		if (board.isEmpty() && from != null) {
+			throw new HantoException("Cannot move a piece that is not on the board.");
 		}
 		
-		// If the board is empty, make sure first move is to (0,0)
-		if( board.isEmpty() ) {
-			if(myTo.getX() != 0 || myTo.getY() != 0) {
-				throw new HantoException( "Invalid coordinate" );
-			}
-			
-			result = MoveResult.OK;
-		}
-		else {
-			// Check if there is an adjacent piece, and if not, throw exception
-			if(isAdjacent(myTo)) {
-				result = MoveResult.DRAW;
-			}
-			else {
-				throw new HantoException("Invalid Move");
-			}
-		}
-		
-		HantoPiece p = new HantoPieceImpl( pieceType, currentTurn );
-		
-		if( currentTurn == HantoPlayerColor.BLUE) {
-			currentTurn = HantoPlayerColor.RED;
-		}
-		else {
-			currentTurn = HantoPlayerColor.BLUE;
-		}
-		
-		board.put(myTo, p);
-		
-		return result;
+		return null;
 	}
-
+	
+	/**
+	 */
 	@Override
 	public HantoPiece getPieceAt(HantoCoordinate where) {
 		
@@ -90,9 +64,8 @@ public class AlphaHantoGame implements HantoGame {
 	/**
 	 * Method isAdjacent.
 	 * @param loc HantoCoordinate
-	 * @return boolean
-	 */
-	public boolean isAdjacent(HantoCoordinate loc) {
+	 * @return boolean */
+	protected boolean isAdjacent(HantoCoordinate loc) {
 		HantoPiece adj1 = board.get(new HantoCoordinateImpl(loc.getX(), loc.getY() - 1));
 		HantoPiece adj2 = board.get(new HantoCoordinateImpl(loc.getX(), loc.getY() + 1));
 		HantoPiece adj3 = board.get(new HantoCoordinateImpl(loc.getX() - 1, loc.getY()));
@@ -103,6 +76,27 @@ public class AlphaHantoGame implements HantoGame {
 		// Check if there is an adjacent piece, and if not, return false
 		return (!(adj1 == null && adj2 == null && adj3 == null && adj4 == null && adj5 == null && adj6 == null));
 	}
+	
+	/**
+	 * Method isSurrounded.
+	 * @param loc HantoCoordinate
+	
+	 * @return boolean */
+	protected boolean isSurrounded(HantoCoordinate loc) {
+		if(loc == null) {
+			return false;
+		}
+		
+		HantoPiece adj1 = board.get(new HantoCoordinateImpl(loc.getX(), loc.getY() - 1));
+		HantoPiece adj2 = board.get(new HantoCoordinateImpl(loc.getX(), loc.getY() + 1));
+		HantoPiece adj3 = board.get(new HantoCoordinateImpl(loc.getX() - 1, loc.getY()));
+		HantoPiece adj4 = board.get(new HantoCoordinateImpl(loc.getX() + 1, loc.getY()));
+		HantoPiece adj5 = board.get(new HantoCoordinateImpl(loc.getX() - 1, loc.getY() + 1));
+		HantoPiece adj6 = board.get(new HantoCoordinateImpl(loc.getX() + 1, loc.getY() - 1));
+		
+		// Check if there is an adjacent piece, and if not, return false
+		return (!(adj1 == null || adj2 == null || adj3 == null || adj4 == null || adj5 == null || adj6 == null));
+	}
 
 	@Override
 	public String getPrintableBoard() {
@@ -112,6 +106,18 @@ public class AlphaHantoGame implements HantoGame {
 			boardState += p.getColor().toString() + " " + p.getType().toString() + " at (" + key.getX() + ", " + key.getY() + ")\n"; 
 		}
 		return boardState;
+	}
+	
+	/**
+	 * Method switchPlayers.
+	 */
+	protected void switchPlayers () {
+		if (currentPlayer == bluePlayer) {
+			currentPlayer = redPlayer;
+		}
+		else {
+			currentPlayer = bluePlayer;
+		}
 	}
 
 }

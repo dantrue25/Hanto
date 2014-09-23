@@ -11,11 +11,11 @@
 package hanto.common;
 
 /**
- * This enumeration identifies the players in Hanto.
- * 
- * @version Jan 12, 2013
- */
-public enum HantoPlayerColor
-{
+	* This enumeration identifies the players in Hanto.
+	* 
+	* @version Jan 12, 2013
+	*/
+	public enum HantoPlayerColor
+	{
 	BLUE, RED;
 }

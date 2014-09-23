@@ -11,11 +11,11 @@
 package hanto.common;
 
 /**
- * This is an enumeration of the possible outcomes of any legal move in Hanto.
- * 
- * @version Jan 12, 2013
- */
-public enum MoveResult
-{
+	* This is an enumeration of the possible outcomes of any legal move in Hanto.
+	* 
+	* @version Jan 12, 2013
+	*/
+	public enum MoveResult
+	{
 	OK, BLUE_WINS, RED_WINS, DRAW;
 }

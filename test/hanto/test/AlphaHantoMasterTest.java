@@ -19,6 +19,8 @@ import static hanto.common.MoveResult.*;
 import static hanto.common.HantoPieceType.*;
 import static hanto.common.HantoPlayerColor.*;
 
+/**
+ */
 public class AlphaHantoMasterTest {
 		/**
 		 * Internal class for these test cases.
@@ -28,7 +30,12 @@ public class AlphaHantoMasterTest {
 		{
 			private final int x, y;
 
-			public TestHantoCoordinate(int x, int y)
+			/**
+			 * Constructor for TestHantoCoordinate.
+			 * @param x int
+			 * @param y int
+			 */
+			private TestHantoCoordinate(int x, int y)
 			{
 				this.x = x;
 				this.y = y;
@@ -52,27 +59,31 @@ public class AlphaHantoMasterTest {
 			}
 		}
 
-		private static HantoGameFactory factory;
+		private static HantoGameFactory factory = HantoGameFactory.getInstance();
 		private HantoGame game;
 
-		@BeforeClass
-		public static void initializeClass()
-		{
-			factory = HantoGameFactory.getInstance();
-		}
-
+		/**
+		 * Method setup.
+		 */
 		@Before
 		public void setup()
 		{
 			game = factory.makeHantoGame(HantoGameID.ALPHA_HANTO);
 		}
 
+		/**
+		 * Method getAnAlphaHantoGameFromTheFactory.
+		 */
 		@Test
 		public void getAnAlphaHantoGameFromTheFactory()
 		{
 			assertTrue(game instanceof AlphaHantoGame);
 		}
 
+		/**
+		 * Method blueMakesValidFirstMove.
+		 * @throws HantoException
+		 */
 		@Test
 		public void blueMakesValidFirstMove() throws HantoException
 		{
@@ -83,6 +94,10 @@ public class AlphaHantoMasterTest {
 			assertEquals("BLUE Butterfly at (0, 0)\n", boardState);
 		}
 
+		/**
+		 * Method afterFirstMoveBlueButterflyIsAt0_0.
+		 * @throws HantoException
+		 */
 		@Test
 		public void afterFirstMoveBlueButterflyIsAt0_0() throws HantoException
 		{
@@ -92,12 +107,20 @@ public class AlphaHantoMasterTest {
 			assertEquals(BLUE, p.getColor());
 		}
 
+		/**
+		 * Method bluePlacesNonButterfly.
+		 * @throws HantoException
+		 */
 		@Test(expected=HantoException.class)
 		public void bluePlacesNonButterfly() throws HantoException
 		{
 			game.makeMove(SPARROW, null, new TestHantoCoordinate(0, 0));
 		}
 
+		/**
+		 * Method redPlacesButterflyNextToBlueButterfly.
+		 * @throws HantoException
+		 */
 		@Test
 		public void redPlacesButterflyNextToBlueButterfly() throws HantoException
 		{
@@ -108,12 +131,20 @@ public class AlphaHantoMasterTest {
 			assertEquals(RED, p.getColor());
 		}
 
+		/**
+		 * Method blueAttemptsToPlaceButterflyAtWrongLocation.
+		 * @throws HantoException
+		 */
 		@Test(expected=HantoException.class)
 		public void blueAttemptsToPlaceButterflyAtWrongLocation() throws HantoException
 		{
 			game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(-1, 1));
 		}
 
+		/**
+		 * Method redMakesValidSecondMoveAndGameIsDrawn.
+		 * @throws HantoException
+		 */
 		@Test
 		public void redMakesValidSecondMoveAndGameIsDrawn() throws HantoException
 		{
@@ -122,6 +153,10 @@ public class AlphaHantoMasterTest {
 			assertEquals(MoveResult.DRAW, mr);
 		}
 
+		/**
+		 * Method redPlacesButterflyNonAdjacentToBlueButterfly.
+		 * @throws HantoException
+		 */
 		@Test(expected=HantoException.class)
 		public void redPlacesButterflyNonAdjacentToBlueButterfly() throws HantoException
 		{
@@ -129,6 +164,10 @@ public class AlphaHantoMasterTest {
 			game.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 2));
 		}
 
+		/**
+		 * Method attemptToMoveRatherThanPlace.
+		 * @throws HantoException
+		 */
 		@Test(expected=HantoException.class)
 		public void attemptToMoveRatherThanPlace() throws HantoException
 		{
