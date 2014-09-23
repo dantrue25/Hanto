@@ -94,7 +94,7 @@ public class BetaHantoGame extends BaseHantoGame implements HantoGame {
 		// Put piece onto the board, and remove piece from player
 		board.put(myTo, p);
 		currentPlayer.removePiece(pieceType);
-			
+		
 		if(currentPlayer.getColor() != movesFirst) {
 			turnNum++;
 		}

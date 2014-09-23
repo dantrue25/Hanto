@@ -364,9 +364,9 @@ public class BetaHantoMasterTest {
 	public void blueWinsGame() throws HantoException
 	{
 		gameRedFirst.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 0)); // Red
-		gameRedFirst.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 1)); // Blue
+		gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate(0, 1)); // Blue
 		gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate(1, 0));   // Red
-		gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate(1, -1));  // Blue
+		gameRedFirst.makeMove(BUTTERFLY, null, new TestHantoCoordinate(1, -1));  // Blue
 		gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate(0, -1));  // Red
 		gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate(-1, 0));  // Blue
 		
