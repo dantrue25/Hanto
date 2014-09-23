@@ -57,95 +57,44 @@ public class BetaHantoGame extends BaseHantoGame implements HantoGame {
 		HantoCoordinateImpl myTo = new HantoCoordinateImpl(to);
 		HantoPieceImpl p = new HantoPieceImpl(pieceType, currentPlayer.getColor());
 		
-		if(from != null) {
-			throw new HantoException("Cannot move a piece.");
+		// Make sure piece is placed, not moved
+		if (from != null) {
+			throw new HantoException ("Cannot move a piece.");
 		}
-		
-		if( board.isEmpty() ) {                                   // If its the first move                                     
-			if(myTo.getX() != 0 || myTo.getY() != 0) {            // If first move ISN'T to (0, 0)
-				throw new HantoException( "Invalid coordinate" );
-			}
-			else if(pieceType == HantoPieceType.BUTTERFLY) {      // If first move IS to (0, 0) and it IS a butterfly
-				board.put(myTo, p);
-
-				if(currentPlayer.getColor() == HantoPlayerColor.BLUE) {
-					blueBLoc = myTo;
-				}
-				else {
-					redBLoc = myTo;						
-				}
-
-				currentPlayer.removePiece(pieceType);
-			}
-			else {                                                // If first move IS to (0, 0) and it IS NOT a butterfly 
-				board.put(myTo, p);
-				currentPlayer.removePiece(pieceType);
-			}
+		// Make sure first move is to (0, 0)
+		if (board.isEmpty() && !myTo.equals(new HantoCoordinateImpl(0, 0))) {
+			throw new HantoException ("First move must be to (0, 0).");
 		}
-		else if(board.get(to) != null) {                          // If player is trying to move a piece rather than place it
-			throw new HantoException("Piece already in that location.");
+		// Make sure move isn't to an occupied space
+		if (board.get(to) != null) {
+			throw new HantoException ("A piece is already in that location.");
 		}
-		else if(turnNum == 4 && currentPlayer.hasPieceOfType(HantoPieceType.BUTTERFLY)) {             // If 4th turn and player hasn't used their butterfly
-			if(pieceType != HantoPieceType.BUTTERFLY) {           // If 4th turn, player hasn't used their butterfly, and player ISN'T using butterfly
-				throw new HantoException("Must use butterfly.");
-			}
-			else {                                                // If 4th turn, player hasn't used their butterfly, and player IS using butterfly
-				if(isAdjacent(myTo)) {                            // If 4th turn, player hasn't used their butterfly, and player IS using butterfly, and it is valid
-					board.put(myTo, p);
-
-					if(currentPlayer.getColor() == HantoPlayerColor.BLUE) {
-						blueBLoc = myTo;
-					}
-					else {
-						redBLoc = myTo;						
-					}
-
-					currentPlayer.removePiece(pieceType);
-				}
-				else {                                            // If 4th turn, player hasn't used their butterfly, and player IS using butterfly, and it is invalid
-					throw new HantoException("Isn't adjacent to another piece.");
-				}
-			}
+		// Make sure that player uses a butterfly by turn 4
+		if (turnNum == 4 && currentPlayer.hasPieceOfType(HantoPieceType.BUTTERFLY) && pieceType != HantoPieceType.BUTTERFLY) {
+			throw new HantoException ("Must play the butterfly by 4th turn.");
 		}
-		else {                                                    // If not turn 4
-			if(pieceType == HantoPieceType.BUTTERFLY) {           // If not turn 4 and piece IS butterfly
-				if(currentPlayer.hasPieceOfType(HantoPieceType.BUTTERFLY)) {                          // If not turn 4, piece is butterfly, and player HASN'T used it already
-					if(isAdjacent(myTo)) {                        // If not turn 4, piece is butterfly, player HASN'T used it, and move is valid
-						board.put(myTo, p);
-
-						if(currentPlayer.getColor() == HantoPlayerColor.BLUE) {
-							blueBLoc = myTo;
-						}
-						else {
-							redBLoc = myTo;						
-						}
-
-						currentPlayer.removePiece(pieceType);
-					}
-					else {                                        // If not turn 4, piece is butterfly, player HASN'T used it, and move is invalid
-						throw new HantoException("Isn't adjacent to another piece.");
-					}
-				}
-				else {                                            // If not turn 4, piece is butterfly, and player HAS used it already
-					throw new HantoException("Already used butterfly.");
-				}
+		// Make sure new piece is adjacent to some piece on the board
+		if (!isAdjacent(myTo) && !board.isEmpty()) {
+			throw new HantoException ("Piece isn't adjacent to an existing piece.");
+		}
+		// Make sure player has the piece they are trying to place
+		if (!currentPlayer.hasPieceOfType(pieceType)) {
+			throw new HantoException ("Current player doesn't have any of those pieces.");
+		}
+		// If piece is butterfly, record the location
+		if (pieceType == HantoPieceType.BUTTERFLY) {
+			if(currentPlayer.getColor() == HantoPlayerColor.BLUE) {
+				blueBLoc = myTo;
 			}
-			else {                                                // If not turn 4 and piece is NOT butterfly
-				if(currentPlayer.hasPieceOfType(HantoPieceType.SPARROW)) {                             // If not turn 4, piece is NOT butterfly, and the player has sparrows left
-					if(isAdjacent(myTo)) {                        // If not turn 4, piece is NOT butterfly, the player has sparrows, and the move is valid
-						board.put(myTo, p);
-						currentPlayer.removePiece(pieceType);
-					}
-					else {                                        // If not turn 4, piece is NOT butterfly, the player has sparrows, and the move is invalid
-						throw new HantoException("Isn't adjacent to another piece.");
-					}
-				}
-				else {                                            // If not turn 4, piece is NOT butterfly, and the player DOESN'T have sparrows
-					throw new HantoException("No more sparrows.");
-				}
+			else {
+				redBLoc = myTo;						
 			}
 		}
 		
+		// Put piece onto the board, and remove piece from player
+		board.put(myTo, p);
+		currentPlayer.removePiece(pieceType);
+			
 		if(currentPlayer.getColor() != movesFirst) {
 			turnNum++;
 		}
