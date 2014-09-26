@@ -13,11 +13,13 @@ package hanto.test;
 import hanto.*;
 import hanto.common.*;
 import hanto.studentdbtrue.alpha.*;
+
 import org.junit.*;
+
 import static org.junit.Assert.*;
-import static hanto.common.MoveResult.*;
 import static hanto.common.HantoPieceType.*;
 import static hanto.common.HantoPlayerColor.*;
+import static hanto.common.MoveResult.*;
 
 /**
  */

@@ -18,9 +18,9 @@ import hanto.studentdbtrue.common.HantoCoordinateImpl;
 import org.junit.*;
 
 import static org.junit.Assert.*;
-import static hanto.common.MoveResult.*;
 import static hanto.common.HantoPieceType.*;
 import static hanto.common.HantoPlayerColor.*;
+import static hanto.common.MoveResult.*;
 
 /**
  */

@@ -3,11 +3,11 @@
  */
 package hanto.studentdbtrue.common;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Dan

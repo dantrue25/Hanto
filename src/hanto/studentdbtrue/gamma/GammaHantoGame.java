@@ -10,7 +10,11 @@
 
 package hanto.studentdbtrue.gamma;
 
+import hanto.common.HantoCoordinate;
+import hanto.common.HantoException;
 import hanto.common.HantoGame;
+import hanto.common.HantoPieceType;
+import hanto.common.MoveResult;
 import hanto.studentdbtrue.common.BaseHantoGame;
 
 /**
@@ -22,10 +26,25 @@ public class GammaHantoGame extends BaseHantoGame implements HantoGame {
 	/**
 	 * 
 	 */
-	public GammaHantoGame() {
+	public GammaHantoGame () {
 		
 	}
 	
-	//private boolean 
+	@Override
+	public MoveResult makeMove (HantoPieceType pieceType, HantoCoordinate from,
+			HantoCoordinate to) throws HantoException {
+		
+		if (!isContinuous (from, to)) {
+			throw new HantoException ("Move makes board not continuous.");
+		}
+		
+		return super.makeMove(pieceType, from, to);
+	}
+	
+	private boolean isContinuous (HantoCoordinate from, HantoCoordinate to) {
+		
+		
+		return false;
+	}
 
 }

@@ -10,9 +10,6 @@
 
 package hanto.studentdbtrue.common;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoGame;
@@ -20,6 +17,9 @@ import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Dan
