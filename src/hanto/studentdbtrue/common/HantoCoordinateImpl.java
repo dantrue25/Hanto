@@ -10,6 +10,9 @@
 
 package hanto.studentdbtrue.common;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import hanto.common.HantoCoordinate;
 
 /**
@@ -34,8 +37,10 @@ public class HantoCoordinateImpl implements HantoCoordinate {
 	 * @param c HantoCoordinate
 	 */
 	public HantoCoordinateImpl(HantoCoordinate c) {
-		x = c.getX();
-		y = c.getY();
+		if (c != null) {
+			x = c.getX();
+			y = c.getY();
+		}
 	}
 	
 	@Override
@@ -46,6 +51,23 @@ public class HantoCoordinateImpl implements HantoCoordinate {
 	@Override
 	public int getY() {
 		return y;
+	}
+	
+	/**
+	 * @param c
+	 * @return neighbors
+	 */
+	public List<HantoCoordinateImpl> getNeighbors () {
+		ArrayList<HantoCoordinateImpl> neighbors = new ArrayList<HantoCoordinateImpl>();
+		
+		neighbors.add(new HantoCoordinateImpl(this.getX() - 1, this.getY() + 1));
+		neighbors.add(new HantoCoordinateImpl(this.getX() - 1, this.getY()));
+		neighbors.add(new HantoCoordinateImpl(this.getX(), this.getY() + 1));
+		neighbors.add(new HantoCoordinateImpl(this.getX(), this.getY() - 1));
+		neighbors.add(new HantoCoordinateImpl(this.getX() + 1, this.getY()));
+		neighbors.add(new HantoCoordinateImpl(this.getX() + 1, this.getY() - 1));
+		
+		return neighbors;
 	}
 
 	@Override

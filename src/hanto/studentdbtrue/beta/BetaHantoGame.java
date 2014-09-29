@@ -10,32 +10,22 @@
 
 package hanto.studentdbtrue.beta;
 
-import hanto.common.HantoCoordinate;
-import hanto.common.HantoException;
-import hanto.common.HantoGame;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
-import hanto.common.MoveResult;
 import hanto.studentdbtrue.common.*;
+import hanto.studentdbtrue.common.rules.CantMoveAnyPiece;
 
 /**
  */
-public class BetaHantoGame extends BaseHantoGame implements HantoGame {
+public class BetaHantoGame extends BaseHantoGame {
 	
 	/**
 	 * Constructor for BetaHantoGame.
 	 * @param movesFirst HantoPlayerColor
 	 */
 	public BetaHantoGame(HantoPlayerColor movesFirst) {
-		this.movesFirst = movesFirst;
-		
-		if (movesFirst == HantoPlayerColor.BLUE) {
-			currentPlayer = bluePlayer;
-		}
-		else {
-			currentPlayer = redPlayer;
-		}
-		
+		super(movesFirst);
+		setUpAdditionalRules();
 		setUpPlayers();
 	}
 	
@@ -48,18 +38,9 @@ public class BetaHantoGame extends BaseHantoGame implements HantoGame {
 			redPlayer.addPiece(HantoPieceType.SPARROW);
 		}
 	}
-
 	
-	@Override
-	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
-			HantoCoordinate to) throws HantoException {
-		
-		// Make sure piece is placed, not moved
-		if (from != null) {
-			throw new HantoException ("Cannot move a piece.");
-		}
-		
-		return super.makeMove(pieceType, from, to);
+	private void setUpAdditionalRules () {
+		ruleSet.add(new CantMoveAnyPiece());
 	}
 
 }

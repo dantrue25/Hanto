@@ -13,6 +13,7 @@ package hanto;
 import hanto.common.*;
 import hanto.studentdbtrue.alpha.AlphaHantoGame;
 import hanto.studentdbtrue.beta.BetaHantoGame;
+import hanto.studentdbtrue.gamma.GammaHantoGame;
 
 /**
  * This is a singleton class that provides a factory to create an instance of any version
@@ -73,6 +74,7 @@ public class HantoGameFactory
 		case EPSILON_HANTO:
 			break;
 		case GAMMA_HANTO:
+			game = new GammaHantoGame(movesFirst);
 			break;
 		case IOTA_HANTO:
 			break;

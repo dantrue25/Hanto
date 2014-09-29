@@ -14,8 +14,11 @@ import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoGame;
 import hanto.common.HantoPieceType;
+import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.studentdbtrue.common.BaseHantoGame;
+import hanto.studentdbtrue.common.rules.MustBeContinuous;
+import hanto.studentdbtrue.common.rules.NewPieceMustBeAdjacentToOwnColor;
 
 /**
  * @author Dan
@@ -26,25 +29,37 @@ public class GammaHantoGame extends BaseHantoGame implements HantoGame {
 	/**
 	 * 
 	 */
-	public GammaHantoGame () {
+	public GammaHantoGame (HantoPlayerColor movesFirst) {
+		super(movesFirst);
+		setUpPlayers();
+		setUpAdditionalRules();
+	}
+	
+	private void setUpPlayers () {
+		bluePlayer.addPiece(HantoPieceType.BUTTERFLY);
+		redPlayer.addPiece(HantoPieceType.BUTTERFLY);
 		
+		for (int i = 0; i < 5; i++) {
+			bluePlayer.addPiece(HantoPieceType.SPARROW);
+			redPlayer.addPiece(HantoPieceType.SPARROW);
+		}
+	}
+	
+	private void setUpAdditionalRules () {
+		ruleSet.add(new MustBeContinuous());
+		ruleSet.add(new NewPieceMustBeAdjacentToOwnColor());
 	}
 	
 	@Override
-	public MoveResult makeMove (HantoPieceType pieceType, HantoCoordinate from,
+	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
 		
-		if (!isContinuous (from, to)) {
-			throw new HantoException ("Move makes board not continuous.");
+		MoveResult r = super.makeMove(pieceType, from, to);
+		if (r == MoveResult.OK && turnNum == 21) {
+			r = MoveResult.DRAW;
 		}
 		
-		return super.makeMove(pieceType, from, to);
-	}
-	
-	private boolean isContinuous (HantoCoordinate from, HantoCoordinate to) {
-		
-		
-		return false;
+		return r;
 	}
 
 }

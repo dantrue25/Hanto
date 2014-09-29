@@ -17,9 +17,16 @@ import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
+import hanto.studentdbtrue.common.rules.CantMovePieceThatIsntOnBoard;
+import hanto.studentdbtrue.common.rules.FirstMoveMustBeAtOrigin;
+import hanto.studentdbtrue.common.rules.GameRule;
+import hanto.studentdbtrue.common.rules.MustHavePieceToPlayIt;
+import hanto.studentdbtrue.common.rules.MustPlayButterflyByFourthTurn;
+import hanto.studentdbtrue.common.rules.PieceMustBeAdjacentToAnother;
+import hanto.studentdbtrue.common.rules.SpaceMustNotAlreadyBeOccupied;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Dan
@@ -27,15 +34,32 @@ import java.util.Map;
  */
 public abstract class BaseHantoGame implements HantoGame {
 
-	protected Map<HantoCoordinate, HantoPiece> board = 
-			new HashMap<HantoCoordinate, HantoPiece>();
-	protected HantoPlayerColor movesFirst;
-	protected HantoCoordinateImpl blueBLoc = null;
-	protected HantoCoordinateImpl redBLoc = null;
+	private Board board;
 	protected int turnNum = 1;
+	protected HantoPlayerColor movesFirst;
 	protected PlayerState bluePlayer = new PlayerState(HantoPlayerColor.BLUE);
 	protected PlayerState redPlayer = new PlayerState(HantoPlayerColor.RED);
 	protected PlayerState currentPlayer;
+	protected List<GameRule> ruleSet;
+	
+	/**
+	 * Constructor for BaseHantoGame.
+	 * @param movesFirst HantoPlayerColor
+	 */
+	protected BaseHantoGame (HantoPlayerColor movesFirst) {
+		
+		board = new Board();
+		
+		this.movesFirst = movesFirst;
+		if (movesFirst == HantoPlayerColor.BLUE) {
+			currentPlayer = bluePlayer;
+		}
+		else {
+			currentPlayer = redPlayer;
+		}
+		
+		setUpBaseRuleSet();
+	}
 	
 	/**
 	 * @throws HantoException 
@@ -45,133 +69,43 @@ public abstract class BaseHantoGame implements HantoGame {
 			HantoCoordinate to) throws HantoException {
 		
 		HantoCoordinateImpl myTo = new HantoCoordinateImpl(to);
-		HantoPieceImpl p = new HantoPieceImpl(pieceType, currentPlayer.getColor());
+		HantoPieceImpl p = new HantoPieceImpl(pieceType, getCurrentPlayer().getColor());
 		
-		// Make sure player doesn't try to move a piece when there arent any
-		if (board.isEmpty() && from != null) {
-			throw new HantoException("Cannot move a piece that is not on the board.");
-		}
-		// Make sure first move is to (0, 0)
-		if (board.isEmpty() && !myTo.equals(new HantoCoordinateImpl(0, 0))) {
-			throw new HantoException ("First move must be to (0, 0).");
-		}
-		// Make sure move isn't to an occupied space
-		if (board.get(to) != null) {
-			throw new HantoException ("A piece is already in that location.");
-		}
-		// Make sure that player uses a butterfly by turn 4
-		if (turnNum == 4 && currentPlayer.hasPieceOfType(HantoPieceType.BUTTERFLY) && pieceType != HantoPieceType.BUTTERFLY) {
-			throw new HantoException ("Must play the butterfly by 4th turn.");
-		}
-		// Make sure new piece is adjacent to some piece on the board
-		if (!isAdjacent(myTo) && !board.isEmpty()) {
-			throw new HantoException ("Piece isn't adjacent to an existing piece.");
-		}
-		// Make sure player has the piece they are trying to place
-		if (!currentPlayer.hasPieceOfType(pieceType)) {
-			throw new HantoException ("Current player doesn't have any of those pieces.");
-		}
-		// If piece is butterfly, record the location
-		if (pieceType == HantoPieceType.BUTTERFLY) {
-			if(currentPlayer.getColor() == HantoPlayerColor.BLUE) {
-				blueBLoc = myTo;
-			}
-			else {
-				redBLoc = myTo;						
-			}
-		}
+		// Check to see if any of the rules are broken
+		for (GameRule r : ruleSet) {
+			r.check(this, board, pieceType, myTo, from);
+		}		
 		
 		// Put piece onto the board, and remove piece from player
-		board.put(myTo, p);
+		board.putPieceOn(myTo, p);
 		currentPlayer.removePiece(pieceType);
-				
+		
+		// Increment turn when needed
 		if(currentPlayer.getColor() != movesFirst) {
 			turnNum++;
 		}
 				
 		switchPlayers();
 				
-		return getMoveResult();
+		return board.getMoveResult(bluePlayer, redPlayer);
 		
 	}
 	
-	private MoveResult getMoveResult () {
-		MoveResult result;
+	// Add rules to the base game
+	private void setUpBaseRuleSet () {
+		ruleSet = new ArrayList<GameRule>();
 		
-		if(isSurrounded(blueBLoc) && isSurrounded(redBLoc)) {
-			result = MoveResult.DRAW;
-		}
-		else if(isSurrounded(blueBLoc)) {
-			result = MoveResult.RED_WINS;
-		}
-		else if(isSurrounded(redBLoc)) {
-			result = MoveResult.BLUE_WINS;
-		}
-		else if(bluePlayer.hasNoPieces() && redPlayer.hasNoPieces()) {
-			result = MoveResult.DRAW;
-		}
-		else {
-			result = MoveResult.OK;
-		}
-		
-		return result;
-	}
-	
-	/**
-	 */
-	@Override
-	public HantoPiece getPieceAt(HantoCoordinate where) {
-		
-		HantoCoordinateImpl myWhere = new HantoCoordinateImpl(where);
-		
-		return board.get(myWhere);
-	}
-	
-	/**
-	 * Method isAdjacent.
-	 * @param loc HantoCoordinate
-	 * @return boolean */
-	protected boolean isAdjacent(HantoCoordinate loc) {
-		HantoPiece adj1 = board.get(new HantoCoordinateImpl(loc.getX(), loc.getY() - 1));
-		HantoPiece adj2 = board.get(new HantoCoordinateImpl(loc.getX(), loc.getY() + 1));
-		HantoPiece adj3 = board.get(new HantoCoordinateImpl(loc.getX() - 1, loc.getY()));
-		HantoPiece adj4 = board.get(new HantoCoordinateImpl(loc.getX() + 1, loc.getY()));
-		HantoPiece adj5 = board.get(new HantoCoordinateImpl(loc.getX() - 1, loc.getY() + 1));
-		HantoPiece adj6 = board.get(new HantoCoordinateImpl(loc.getX() + 1, loc.getY() - 1));
-		
-		// Check if there is an adjacent piece, and if not, return false
-		return (!(adj1 == null && adj2 == null && adj3 == null && adj4 == null && adj5 == null && adj6 == null));
-	}
-	
-	/**
-	 * Method isSurrounded.
-	 * @param loc HantoCoordinate
-	
-	 * @return boolean */
-	protected boolean isSurrounded(HantoCoordinate loc) {
-		if(loc == null) {
-			return false;
-		}
-		
-		HantoPiece adj1 = board.get(new HantoCoordinateImpl(loc.getX(), loc.getY() - 1));
-		HantoPiece adj2 = board.get(new HantoCoordinateImpl(loc.getX(), loc.getY() + 1));
-		HantoPiece adj3 = board.get(new HantoCoordinateImpl(loc.getX() - 1, loc.getY()));
-		HantoPiece adj4 = board.get(new HantoCoordinateImpl(loc.getX() + 1, loc.getY()));
-		HantoPiece adj5 = board.get(new HantoCoordinateImpl(loc.getX() - 1, loc.getY() + 1));
-		HantoPiece adj6 = board.get(new HantoCoordinateImpl(loc.getX() + 1, loc.getY() - 1));
-		
-		// Check if there is an adjacent piece, and if not, return false
-		return (!(adj1 == null || adj2 == null || adj3 == null || adj4 == null || adj5 == null || adj6 == null));
+		ruleSet.add(new MustPlayButterflyByFourthTurn());
+		ruleSet.add(new CantMovePieceThatIsntOnBoard());
+		ruleSet.add(new FirstMoveMustBeAtOrigin());
+		ruleSet.add(new SpaceMustNotAlreadyBeOccupied());
+		ruleSet.add(new PieceMustBeAdjacentToAnother());
+		ruleSet.add(new MustHavePieceToPlayIt());
 	}
 
 	@Override
 	public String getPrintableBoard() {
-		String boardState = "";
-		for (HantoCoordinate key: board.keySet()) {
-		    HantoPiece p = board.get(key);
-			boardState += p.getColor().toString() + " " + p.getType().toString() + " at (" + key.getX() + ", " + key.getY() + ")\n"; 
-		}
-		return boardState;
+		return board.getPrintableBoard();
 	}
 	
 	/**
@@ -184,6 +118,25 @@ public abstract class BaseHantoGame implements HantoGame {
 		else {
 			currentPlayer = bluePlayer;
 		}
+	}
+	
+	@Override
+	public HantoPiece getPieceAt(HantoCoordinate where) {
+		return board.getPieceAt(where);
+	}
+
+	/**
+	 * @return the turnNum
+	 */
+	public int getTurnNum() {
+		return turnNum;
+	}
+
+	/**
+	 * @return the currentPlayer
+	 */
+	public PlayerState getCurrentPlayer() {
+		return currentPlayer;
 	}
 
 }
