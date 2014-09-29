@@ -8,28 +8,22 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package hanto;
+package common;
 
 import hanto.common.*;
-import hanto.studentdbtrue.alpha.AlphaHantoGame;
-import hanto.studentdbtrue.beta.BetaHantoGame;
-import hanto.studentdbtrue.gamma.GammaHantoGame;
 
 /**
- * This is a singleton class that provides a factory to create an instance of any version
- * of a Hanto game.
- * 
- * @author gpollice
- * @version Feb 5, 2013
+ * Description
+ * @version Sep 22, 2014
  */
-public class HantoGameFactory
+public class HantoTestGameFactory
 {
-	private static final HantoGameFactory INSTANCE = new HantoGameFactory();
+	private static final HantoTestGameFactory instance = new HantoTestGameFactory();
 	
 	/**
 	 * Default private descriptor.
 	 */
-	private HantoGameFactory()
+	private HantoTestGameFactory()
 	{
 		// Empty, but the private constructor is necessary for the singleton.
 	}
@@ -37,9 +31,9 @@ public class HantoGameFactory
 	/**
 	 * @return the instance
 	 */
-	public static HantoGameFactory getInstance()
+	public static HantoTestGameFactory getInstance()
 	{
-		return INSTANCE;
+		return instance;
 	}
 	
 	/**
@@ -48,9 +42,9 @@ public class HantoGameFactory
 	 * @param gameId the version desired.
 	 * @return the game instance
 	 */
-	public HantoGame makeHantoGame(HantoGameID gameId)
+	public HantoGame makeTestHantoGame(HantoGameID gameId)
 	{
-		return makeHantoGame(gameId, HantoPlayerColor.BLUE);
+		return makeHantoTestGame(gameId, HantoPlayerColor.BLUE);
 	}
 	
 	/**
@@ -59,33 +53,29 @@ public class HantoGameFactory
 	 * @param movesFirst the player color that moves first
 	 * @return the game instance
 	 */
-	public HantoGame makeHantoGame(HantoGameID gameId, HantoPlayerColor movesFirst) {
+	public  HantoGame makeHantoTestGame(HantoGameID gameId, HantoPlayerColor movesFirst) {
 		HantoGame game = null;
-		
 		switch (gameId) {
-		case ALPHA_HANTO:
-			game = new AlphaHantoGame();
-			break;
-		case BETA_HANTO:
-			game = new BetaHantoGame(movesFirst);
-			break;
-		case DELTA_HANTO:
-			break;
-		case EPSILON_HANTO:
-			break;
-		case GAMMA_HANTO:
-			game = new GammaHantoGame(movesFirst);
-			break;
-		case IOTA_HANTO:
-			break;
-		case THETA_HANTO:
-			break;
-		case ZETA_HANTO:
-			break;
-		default:
-			break;
+			case GAMMA_HANTO:
+				game = new GammaHantoTestGame(movesFirst);
+				break;
+			case ALPHA_HANTO:
+				break;
+			case BETA_HANTO:
+				break;
+			case DELTA_HANTO:
+				break;
+			case EPSILON_HANTO:
+				break;
+			case IOTA_HANTO:
+				break;
+			case THETA_HANTO:
+				break;
+			case ZETA_HANTO:
+				break;
+			default:
+				break;
 		}
-		
 		return game;
 	}
 }

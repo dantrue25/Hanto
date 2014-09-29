@@ -19,7 +19,7 @@ public class MustBeContinuous extends GameRule {
 	public void check(BaseHantoGame game, Board board, HantoPieceType p,
 			HantoCoordinate to, HantoCoordinate from) throws HantoException {
 		
-		if (from != null && !board.isContinuous(from) && game.getTurnNum() != 1) {
+		if (from != null && !board.isContinuous(from, to) && game.getTurnNum() != 1) {
 			throw new HantoException("Has to be continuous.");
 		}
 		

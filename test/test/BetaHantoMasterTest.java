@@ -8,10 +8,10 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package hanto.test;
+package test;
 
-import hanto.*;
 import hanto.common.*;
+import hanto.studentdbtrue.HantoGameFactory;
 import hanto.studentdbtrue.beta.BetaHantoGame;
 import hanto.studentdbtrue.common.HantoCoordinateImpl;
 

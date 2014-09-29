@@ -10,8 +10,11 @@
 
 package hanto.studentdbtrue.beta;
 
+import hanto.common.HantoCoordinate;
+import hanto.common.HantoException;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+import hanto.common.MoveResult;
 import hanto.studentdbtrue.common.*;
 import hanto.studentdbtrue.common.rules.CantMoveAnyPiece;
 
@@ -41,6 +44,19 @@ public class BetaHantoGame extends BaseHantoGame {
 	
 	private void setUpAdditionalRules () {
 		ruleSet.add(new CantMoveAnyPiece());
+	}
+	
+	@Override
+	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
+			HantoCoordinate to) throws HantoException {
+		
+		MoveResult r = super.makeMove(pieceType, from, to);
+		
+		if (r == MoveResult.OK && bluePlayer.hasNoPieces() && redPlayer.hasNoPieces()) {
+			r = MoveResult.DRAW;
+		}
+		
+		return r;
 	}
 
 }

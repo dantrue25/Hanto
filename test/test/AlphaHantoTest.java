@@ -8,10 +8,10 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package hanto.test;
+package test;
 
-import hanto.*;
 import hanto.common.*;
+import hanto.studentdbtrue.HantoGameFactory;
 import hanto.studentdbtrue.alpha.*;
 
 import org.junit.*;
@@ -23,7 +23,7 @@ import static hanto.common.MoveResult.*;
 
 /**
  */
-public class AlphaHantoMasterTest {
+public class AlphaHantoTest {
 		/**
 		 * Internal class for these test cases.
 		 * @version Sep 13, 2014

@@ -17,6 +17,8 @@ import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.studentdbtrue.common.BaseHantoGame;
+import hanto.studentdbtrue.common.rules.CanOnlyWalkOneSpace;
+import hanto.studentdbtrue.common.rules.CantMoveIfBlocked;
 import hanto.studentdbtrue.common.rules.MustBeContinuous;
 import hanto.studentdbtrue.common.rules.NewPieceMustBeAdjacentToOwnColor;
 
@@ -48,6 +50,8 @@ public class GammaHantoGame extends BaseHantoGame implements HantoGame {
 	private void setUpAdditionalRules () {
 		ruleSet.add(new MustBeContinuous());
 		ruleSet.add(new NewPieceMustBeAdjacentToOwnColor());
+		ruleSet.add(new CantMoveIfBlocked());
+		ruleSet.add(new CanOnlyWalkOneSpace());
 	}
 	
 	@Override

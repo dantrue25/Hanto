@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Dan
@@ -42,8 +43,8 @@ public class Board {
 	
 	/**
 	 * @param where HantoCoordinate
-	 * @return HantoPiece 
-	 */
+	
+	 * @return HantoPiece  */
 	public HantoPiece getPieceAt(HantoCoordinate where) {
 		
 		HantoCoordinateImpl myWhere = new HantoCoordinateImpl(where);
@@ -85,8 +86,8 @@ public class Board {
 	 * Method getMoveResult.
 	 * @param bluePlayer PlayerState
 	 * @param redPlayer PlayerState
-	 * @return MoveResult
-	 */
+	
+	 * @return MoveResult */
 	public MoveResult getMoveResult (PlayerState bluePlayer, PlayerState redPlayer) {
 		MoveResult result;
 		
@@ -98,9 +99,6 @@ public class Board {
 		}
 		else if(isSurrounded(redBLoc)) {
 			result = MoveResult.BLUE_WINS;
-		}
-		else if(bluePlayer.hasNoPieces() && redPlayer.hasNoPieces()) {
-			result = MoveResult.DRAW;
 		}
 		else {
 			result = MoveResult.OK;
@@ -126,12 +124,12 @@ public class Board {
 	/**
 	 * Method adjacentPieceCoords
 	 * @param loc
-	 * @return adjacent
-	 */
+	
+	 * @return adjacent */
 	public List<HantoCoordinateImpl> adjacentPieceCoords (HantoCoordinate loc) {
 		HantoCoordinateImpl myLoc = new HantoCoordinateImpl(loc);
 		
-		ArrayList<HantoCoordinateImpl> adjacent = new ArrayList<HantoCoordinateImpl>();
+		List<HantoCoordinateImpl> adjacent = new ArrayList<HantoCoordinateImpl>();
 		List<HantoCoordinateImpl> neighbors = myLoc.getNeighbors();
 		HantoPiece[] piece = new HantoPiece[6];
 		
@@ -161,19 +159,13 @@ public class Board {
 	private synchronized void constructConnectedPiecesList (List<HantoCoordinateImpl> visited, HantoCoordinate parent, int count) {
 		List<HantoCoordinateImpl> connected = adjacentPieceCoords(parent);
 		count++;
-		for (int i = 0; i < connected.size(); i++) {
-			if (visited.contains(connected.get(i))) {
-				System.out.println("   Removing: (" + connected.get(i).getX() + ", " + connected.get(i).getY() + ")");
-				
-				connected.remove(connected.get(i));
-			}
-		}
+		connected.removeAll(visited);
 		
 		for (int j = 0; j < connected.size(); j++) {
 			visited.add(connected.get(j));
 		}
 		
-		HashSet<HantoCoordinateImpl> visitedH = new HashSet<HantoCoordinateImpl>();
+		Set<HantoCoordinateImpl> visitedH = new HashSet<HantoCoordinateImpl>();
 		visitedH.addAll(visited);
 		visited.clear();
 		visited.addAll(visitedH);
@@ -189,7 +181,7 @@ public class Board {
 		}
 	}
 	
-	private int numOfPiecesOnBoard () {
+	public int numOfPiecesOnBoard () {
 		int count = 0;
 		Collection<HantoPiece> pList = board.values();
 		
@@ -203,17 +195,20 @@ public class Board {
 	}
 	
 	/**
-	 * @param moving
-	 * @return continuous
+	 * @param from
+	 * @param to
+	
+	 * @return boolean
 	 */
-	public boolean isContinuous (HantoCoordinate moving) {
+	public boolean isContinuous (HantoCoordinate from, HantoCoordinate to) {
 		boolean continuous = false;
 		List<HantoCoordinateImpl> visited = new ArrayList<HantoCoordinateImpl>();
 		
-		HantoPiece p = board.get(moving);
-		board.remove(moving);
+		HantoPiece p = board.get(from);
+		board.remove(from);
+		board.put(to, p);
 		
-		List<HantoCoordinateImpl> connected = adjacentPieceCoords(moving);
+		List<HantoCoordinateImpl> connected = adjacentPieceCoords(from);
 		visited.add(connected.get(0));
 		int count = 0;
 		constructConnectedPiecesList (visited, connected.get(0), count);
@@ -224,7 +219,8 @@ public class Board {
 			continuous = true;
 		}
 		
-		board.put(moving, p);
+		board.remove(to);
+		board.put(from, p);
 		return continuous;
 	}
 	

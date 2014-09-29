@@ -131,12 +131,31 @@ public abstract class BaseHantoGame implements HantoGame {
 	public int getTurnNum() {
 		return turnNum;
 	}
+	
+	/**
+	 * @param turn
+	 */
+	public void setTurnNum (int turn) {
+		turnNum = turn;
+	}
 
 	/**
 	 * @return the currentPlayer
 	 */
 	public PlayerState getCurrentPlayer() {
 		return currentPlayer;
+	}
+	
+	/**
+	 * @param color
+	 */
+	public void setCurrentPlayer(HantoPlayerColor color) {
+		if (color == HantoPlayerColor.BLUE) {
+			currentPlayer = bluePlayer;
+		}
+		else {
+			currentPlayer = redPlayer;
+		}
 	}
 
 }
