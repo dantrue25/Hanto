@@ -1,13 +1,14 @@
 /**
  * 
  */
-package hanto.studentdbtrue.common.rules;
+package hanto.studentdbtrue.common.rules.base;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoPieceType;
 import hanto.studentdbtrue.common.BaseHantoGame;
 import hanto.studentdbtrue.common.Board;
+import hanto.studentdbtrue.common.rules.GameRule;
 
 /**
  * @author Dan

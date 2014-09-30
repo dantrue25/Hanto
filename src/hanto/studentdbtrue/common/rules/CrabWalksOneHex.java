@@ -8,7 +8,6 @@ import java.util.List;
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoPieceType;
-import hanto.common.HantoPlayerColor;
 import hanto.studentdbtrue.common.BaseHantoGame;
 import hanto.studentdbtrue.common.Board;
 import hanto.studentdbtrue.common.HantoCoordinateImpl;
@@ -17,23 +16,23 @@ import hanto.studentdbtrue.common.HantoCoordinateImpl;
  * @author Dan
  *
  */
-public class NewPieceMustBeAdjacentToOwnColor extends GameRule {
-	
+public class CrabWalksOneHex extends GameRule {
+
 	@Override
 	public void check(BaseHantoGame game, Board board, HantoPieceType p,
 			HantoCoordinate to, HantoCoordinate from) throws HantoException {
 		
-		HantoPlayerColor ownColor = game.getCurrentPlayer().getColor();
-		List<HantoCoordinateImpl> occupiedCoords = board.adjacentPieceCoords(to);
+		HantoCoordinateImpl myFrom = new HantoCoordinateImpl(from);
+		HantoCoordinateImpl myTo = new HantoCoordinateImpl(to);
 		
-		if (from == null) {
-			for (HantoCoordinate c : occupiedCoords) {
-				if (board.getPieceAt(c).getColor() != ownColor && board.numOfPiecesOnBoard() != 1) {
-					throw new HantoException("Cannot place piece next to opposing color piece.");
-				}
+		if (from != null && p == HantoPieceType.CRAB) {
+			List<HantoCoordinateImpl> fromNeighbors = myFrom.getNeighbors();
+			if (!fromNeighbors.contains(myTo)) {
+				throw new HantoException ("The Crab can only walk one space.");
 			}
+			
 		}
-
+		
 	}
 
 }

@@ -16,8 +16,6 @@ import hanto.studentdbtrue.common.HantoCoordinateImpl;
 import org.junit.Before;
 import org.junit.Test;
 
-import common.HantoTestGameFactory;
-
 /**
  * @author Dan
  *
@@ -116,21 +114,4 @@ public class GammaHantoTest {
 		game.makeMove(SPARROW, new HantoCoordinateImpl(0, -1), new HantoCoordinateImpl(-2, 0));   // Blue	
 	}
 	
-	/**
-	 * Method moveOn20thTurn.
-	 * @throws HantoException
-	 */
-	@Test
-	public void moveOn20thTurn() throws HantoException
-	{
-		HantoTestGameFactory testFactory = HantoTestGameFactory.getInstance();
-		HantoGame testGame = testFactory.makeTestHantoGame(HantoGameID.GAMMA_HANTO);
-		
-		MoveResult r1 = testGame.makeMove(BUTTERFLY, null, new HantoCoordinateImpl(0, 0));   // Blue
-		MoveResult r2 = testGame.makeMove(BUTTERFLY, null, new HantoCoordinateImpl(0, 1));   // Red
-		
-		assertEquals(MoveResult.OK, r1);
-		assertEquals(MoveResult.DRAW, r2);
-	
-	}
 }

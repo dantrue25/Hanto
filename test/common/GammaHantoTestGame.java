@@ -21,31 +21,22 @@ public class GammaHantoTestGame implements HantoTestGame {
 	
 	/**
 	 * 
+	 * @param movesFirst HantoPlayerColor
 	 */
 	public GammaHantoTestGame(HantoPlayerColor movesFirst) {
 		game = new GammaHantoGame(movesFirst);
-		game.setTurnNum(20);
 	}
 
-	/* (non-Javadoc)
-	 * @see hanto.common.HantoGame#getPieceAt(hanto.common.HantoCoordinate)
-	 */
 	@Override
 	public HantoPiece getPieceAt(HantoCoordinate where) {
 		return game.getPieceAt(where);
 	}
 
-	/* (non-Javadoc)
-	 * @see hanto.common.HantoGame#getPrintableBoard()
-	 */
 	@Override
 	public String getPrintableBoard() {
 		return game.getPrintableBoard();
 	}
 
-	/* (non-Javadoc)
-	 * @see common.HantoTestGame#initializeBoard(common.HantoTestGame.PieceLocationPair[])
-	 */
 	@Override
 	public void initializeBoard(PieceLocationPair[] initialPieces) {
 		
@@ -60,18 +51,12 @@ public class GammaHantoTestGame implements HantoTestGame {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see common.HantoTestGame#setTurnNumber(int)
-	 */
 	@Override
 	public void setTurnNumber(int turnNumber) {
 		game.setTurnNum(turnNumber);
 
 	}
 
-	/* (non-Javadoc)
-	 * @see common.HantoTestGame#setPlayerMoving(hanto.common.HantoPlayerColor)
-	 */
 	@Override
 	public void setPlayerMoving(HantoPlayerColor player) {
 		game.setCurrentPlayer(player);

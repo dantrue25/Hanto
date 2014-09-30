@@ -13,16 +13,17 @@ import hanto.studentdbtrue.common.Board;
  * @author Dan
  *
  */
-public class CantMoveAnyPiece extends GameRule {
+public class CantMakeMoveAfterGameIsOver extends GameRule {
 
 	@Override
-	public void check(BaseHantoGame game, Board board, HantoPieceType p, HantoCoordinate to,
-			HantoCoordinate from) throws HantoException {
+	public void check(BaseHantoGame game, Board board, HantoPieceType p,
+			HantoCoordinate to, HantoCoordinate from) throws HantoException {
 		
-		if (from != null) {
-			throw new HantoException("Cannot move piece.");
+		if (game.isGameOver()) {
+			throw new HantoException("Cant move piece if game is over.");
 		}
 		
 	}
+
 
 }

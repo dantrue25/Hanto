@@ -24,9 +24,9 @@ public interface HantoTestGame extends HantoGame
 	 * @version Sep 21, 2014
 	 */
 	class PieceLocationPair {
-		public final HantoPlayerColor player;
-		public final HantoPieceType pieceType;
-		public final HantoCoordinate location;
+		final HantoPlayerColor player;
+		final HantoPieceType pieceType;
+		final HantoCoordinate location;
 		
 		/**
 		 * Default constructor
@@ -34,7 +34,7 @@ public interface HantoTestGame extends HantoGame
 		 * @param pieceType the piece type
 		 * @param location the coordinate where the piece is at the beginning of the test
 		 */
-		public PieceLocationPair(HantoPlayerColor player, HantoPieceType pieceType,
+		PieceLocationPair(HantoPlayerColor player, HantoPieceType pieceType,
 				HantoCoordinate location)
 		{
 			this.player = player;

@@ -17,13 +17,14 @@ import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
-import hanto.studentdbtrue.common.rules.CantMovePieceThatIsntOnBoard;
-import hanto.studentdbtrue.common.rules.FirstMoveMustBeAtOrigin;
 import hanto.studentdbtrue.common.rules.GameRule;
-import hanto.studentdbtrue.common.rules.MustHavePieceToPlayIt;
-import hanto.studentdbtrue.common.rules.MustPlayButterflyByFourthTurn;
-import hanto.studentdbtrue.common.rules.PieceMustBeAdjacentToAnother;
-import hanto.studentdbtrue.common.rules.SpaceMustNotAlreadyBeOccupied;
+import hanto.studentdbtrue.common.rules.base.CantMovePieceThatIsntOnBoard;
+import hanto.studentdbtrue.common.rules.base.FirstMoveMustBeAtOrigin;
+import hanto.studentdbtrue.common.rules.base.MustHavePieceToPlayIt;
+import hanto.studentdbtrue.common.rules.base.MustPlayButterflyByFourthTurn;
+import hanto.studentdbtrue.common.rules.base.PieceMustBeAdjacentToAnother;
+import hanto.studentdbtrue.common.rules.base.PieceTypeMustBeCorrectToMoveIt;
+import hanto.studentdbtrue.common.rules.base.SpaceMustNotAlreadyBeOccupied;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,10 @@ public abstract class BaseHantoGame implements HantoGame {
 	protected PlayerState redPlayer = new PlayerState(HantoPlayerColor.RED);
 	protected PlayerState currentPlayer;
 	protected List<GameRule> ruleSet;
+	private boolean gameOver;
+	protected boolean redResigns;
+	protected boolean blueResigns;
+	protected List<Movement> movementList;
 	
 	/**
 	 * Constructor for BaseHantoGame.
@@ -73,12 +78,16 @@ public abstract class BaseHantoGame implements HantoGame {
 		
 		// Check to see if any of the rules are broken
 		for (GameRule r : ruleSet) {
-			r.check(this, board, pieceType, myTo, from);
-		}		
+			r.check(this, board, pieceType, to, from);
+		}
 		
-		// Put piece onto the board, and remove piece from player
-		board.putPieceOn(myTo, p);
-		currentPlayer.removePiece(pieceType);
+		checkForResignation();
+		
+		if (!gameOver) {
+			// Put piece onto the board, and remove piece from player
+			board.putPieceOn(myTo, p);
+			currentPlayer.removePiece(pieceType);
+		}
 		
 		// Increment turn when needed
 		if(currentPlayer.getColor() != movesFirst) {
@@ -87,8 +96,40 @@ public abstract class BaseHantoGame implements HantoGame {
 				
 		switchPlayers();
 				
-		return board.getMoveResult(bluePlayer, redPlayer);
+		return getMoveResult();
 		
+	}
+	
+	/**
+	 * Method getMoveResult.
+	
+	 * @return MoveResult */
+	public MoveResult getMoveResult () {
+		MoveResult result;
+		
+		if(board.isSurrounded(board.blueBLoc) && board.isSurrounded(board.redBLoc)) {
+			result = MoveResult.DRAW;
+			setGameOver(true);
+		}
+		else if(board.isSurrounded(board.blueBLoc) || blueResigns) {
+			result = MoveResult.RED_WINS;
+			setGameOver(true);
+		}
+		else if(board.isSurrounded(board.redBLoc) || redResigns) {
+			result = MoveResult.BLUE_WINS;
+			setGameOver(true);
+		}
+		else {
+			result = MoveResult.OK;
+		}
+		
+		return result;
+	}
+	
+	private void checkForResignation () {
+		if (blueResigns || redResigns) {
+			gameOver = true;
+		}
 	}
 	
 	// Add rules to the base game
@@ -101,6 +142,25 @@ public abstract class BaseHantoGame implements HantoGame {
 		ruleSet.add(new SpaceMustNotAlreadyBeOccupied());
 		ruleSet.add(new PieceMustBeAdjacentToAnother());
 		ruleSet.add(new MustHavePieceToPlayIt());
+		ruleSet.add(new PieceTypeMustBeCorrectToMoveIt());
+	}
+	
+	/**
+	 * @param p
+	
+	
+	 * @return Movement */
+	public Movement getMovementType (HantoPieceType p) {
+		Movement movement = null;
+		
+		for (Movement m : movementList) {
+			if (m.getPieceType() == p) {
+				movement = m;
+			}
+		}
+		
+		return movement;
+		
 	}
 
 	@Override
@@ -156,6 +216,34 @@ public abstract class BaseHantoGame implements HantoGame {
 		else {
 			currentPlayer = redPlayer;
 		}
+	}
+
+	/**
+	 * @return the isGameOver
+	 */
+	public boolean isGameOver() {
+		return gameOver;
+	}
+
+	/**
+	 * @param isGameOver the isGameOver to set
+	 */
+	public void setGameOver(boolean isGameOver) {
+		gameOver = isGameOver;
+	}
+	
+	/**
+	 * 
+	 */
+	public void makeRedResign () {
+		redResigns = true;
+	}
+	
+	/**
+	 * 
+	 */
+	public void makeBlueResign () {
+		blueResigns = true;
 	}
 
 }

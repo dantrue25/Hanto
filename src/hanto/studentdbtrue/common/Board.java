@@ -7,8 +7,6 @@ import hanto.common.HantoCoordinate;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
-import hanto.common.MoveResult;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -80,31 +78,6 @@ public class Board {
 			boardState += p.getColor().toString() + " " + p.getType().toString() + " at (" + key.getX() + ", " + key.getY() + ")\n"; 
 		}
 		return boardState;
-	}
-	
-	/**
-	 * Method getMoveResult.
-	 * @param bluePlayer PlayerState
-	 * @param redPlayer PlayerState
-	
-	 * @return MoveResult */
-	public MoveResult getMoveResult (PlayerState bluePlayer, PlayerState redPlayer) {
-		MoveResult result;
-		
-		if(isSurrounded(blueBLoc) && isSurrounded(redBLoc)) {
-			result = MoveResult.DRAW;
-		}
-		else if(isSurrounded(blueBLoc)) {
-			result = MoveResult.RED_WINS;
-		}
-		else if(isSurrounded(redBLoc)) {
-			result = MoveResult.BLUE_WINS;
-		}
-		else {
-			result = MoveResult.OK;
-		}
-		
-		return result;
 	}
 	
 	/**
@@ -181,6 +154,9 @@ public class Board {
 		}
 	}
 	
+	/**
+	 * @return count
+	 */
 	public int numOfPiecesOnBoard () {
 		int count = 0;
 		Collection<HantoPiece> pList = board.values();

@@ -12,15 +12,15 @@ package hanto.studentdbtrue.beta;
 
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
+import hanto.common.HantoGame;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.studentdbtrue.common.*;
-import hanto.studentdbtrue.common.rules.CantMoveAnyPiece;
 
 /**
  */
-public class BetaHantoGame extends BaseHantoGame {
+public class BetaHantoGame extends BaseHantoGame implements HantoGame {
 	
 	/**
 	 * Constructor for BetaHantoGame.
@@ -43,7 +43,7 @@ public class BetaHantoGame extends BaseHantoGame {
 	}
 	
 	private void setUpAdditionalRules () {
-		ruleSet.add(new CantMoveAnyPiece());
+		
 	}
 	
 	@Override

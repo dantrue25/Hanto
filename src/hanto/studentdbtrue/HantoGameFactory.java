@@ -13,6 +13,7 @@ package hanto.studentdbtrue;
 import hanto.common.*;
 import hanto.studentdbtrue.alpha.AlphaHantoGame;
 import hanto.studentdbtrue.beta.BetaHantoGame;
+import hanto.studentdbtrue.delta.DeltaHantoGame;
 import hanto.studentdbtrue.gamma.GammaHantoGame;
 
 /**
@@ -70,6 +71,7 @@ public class HantoGameFactory
 			game = new BetaHantoGame(movesFirst);
 			break;
 		case DELTA_HANTO:
+			game = new DeltaHantoGame(movesFirst);
 			break;
 		case EPSILON_HANTO:
 			break;

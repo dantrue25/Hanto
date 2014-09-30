@@ -61,23 +61,12 @@ public class GammaHantoGame extends BaseHantoGame implements HantoGame {
 		
 		MoveResult r;
 		
-		if (pieceType == null && from == null && to == null) {
-			gameOver = true;
+		r = super.makeMove(pieceType, from, to);
+		if (r == MoveResult.OK && turnNum == 21) {
 			r = MoveResult.DRAW;
+			gameOver = true;
 		}
 		
-		if (!gameOver) {
-			r = super.makeMove(pieceType, from, to);
-			if (r == MoveResult.OK && turnNum == 21) {
-				r = MoveResult.DRAW;
-			}
-			if (r == MoveResult.DRAW || r == MoveResult.BLUE_WINS || r == MoveResult.RED_WINS) {
-				gameOver = true;
-			}
-		}
-		else {
-			throw new HantoException("Cannot move after game is over.");
-		}
 		return r;
 	}
 
