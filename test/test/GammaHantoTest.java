@@ -45,7 +45,7 @@ public class GammaHantoTest {
 		game.makeMove(SPARROW, null, new HantoCoordinateImpl(-1, 0));   // Blue
 		game.makeMove(SPARROW, null, new HantoCoordinateImpl(0, 2));   // Red
 		game.makeMove(SPARROW, null, new HantoCoordinateImpl(0, -1));   // Blue
-		System.out.println("discontinuous");
+		
 		game.makeMove(SPARROW, new HantoCoordinateImpl(0, 1), new HantoCoordinateImpl(-1, 2));   // Red
 	}
 	
@@ -61,7 +61,6 @@ public class GammaHantoTest {
 		game.makeMove(SPARROW, null, new HantoCoordinateImpl(-1, 0));   // Blue
 		game.makeMove(SPARROW, null, new HantoCoordinateImpl(0, 2));   // Red
 		game.makeMove(SPARROW, null, new HantoCoordinateImpl(0, -1));   // Blue
-		System.out.println("continuous");
 		
 		MoveResult r = game.makeMove(SPARROW, new HantoCoordinateImpl(0, 2), new HantoCoordinateImpl(1, 1));   // Red
 		assertEquals(MoveResult.OK, r);	

@@ -129,9 +129,8 @@ public class Board {
 		return connected.size() == 6;
 	}
 	
-	private synchronized void constructConnectedPiecesList (List<HantoCoordinateImpl> visited, HantoCoordinate parent, int count) {
+	private synchronized void constructConnectedPiecesList (List<HantoCoordinateImpl> visited, HantoCoordinate parent) {
 		List<HantoCoordinateImpl> connected = adjacentPieceCoords(parent);
-		count++;
 		connected.removeAll(visited);
 		
 		for (int j = 0; j < connected.size(); j++) {
@@ -143,14 +142,8 @@ public class Board {
 		visited.clear();
 		visited.addAll(visitedH);
 		
-		System.out.println("count: " + count);
-		for (int n = 0; n < visited.size(); n++) {
-			System.out.println("(" + visited.get(n).getX() + ", " + visited.get(n).getY() + ")");
-		}
-		System.out.println("");
-		
 		for (int k = 0; k < connected.size(); k++) {
-			constructConnectedPiecesList (visited, connected.get(k), count);
+			constructConnectedPiecesList (visited, connected.get(k));
 		}
 	}
 	
@@ -186,10 +179,7 @@ public class Board {
 		
 		List<HantoCoordinateImpl> connected = adjacentPieceCoords(from);
 		visited.add(connected.get(0));
-		int count = 0;
-		constructConnectedPiecesList (visited, connected.get(0), count);
-		
-		System.out.println("V size = " + visited.size() + ", B size = " + numOfPiecesOnBoard());
+		constructConnectedPiecesList (visited, connected.get(0));
 		
 		if (visited.size() == numOfPiecesOnBoard()) {
 			continuous = true;
