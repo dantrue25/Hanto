@@ -74,6 +74,7 @@ public abstract class BaseHantoGame implements HantoGame {
 			HantoCoordinate to) throws HantoException {
 		
 		HantoCoordinateImpl myTo = new HantoCoordinateImpl(to);
+		HantoCoordinateImpl myFrom = new HantoCoordinateImpl(from);
 		HantoPieceImpl p = new HantoPieceImpl(pieceType, getCurrentPlayer().getColor());
 		
 		// Check to see if any of the rules are broken
@@ -83,10 +84,16 @@ public abstract class BaseHantoGame implements HantoGame {
 		
 		checkForResignation();
 		
-		if (!gameOver) {
-			// Put piece onto the board, and remove piece from player
+		if (!gameOver) {			
+			if (from != null) {
+				board.removePieceOn(myFrom);
+			}
+			else {
+				currentPlayer.removePiece(pieceType);
+			}
+			
+			// Put piece onto the board
 			board.putPieceOn(myTo, p);
-			currentPlayer.removePiece(pieceType);
 		}
 		
 		// Increment turn when needed

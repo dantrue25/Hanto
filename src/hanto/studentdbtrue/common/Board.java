@@ -69,6 +69,17 @@ public class Board {
 	}
 	
 	/**
+	 * @param c
+	 */
+	public void removePieceOn (HantoCoordinateImpl c) {
+		
+		HantoPiece p = board.get(c);
+		if (p != null) {
+			board.remove(c);
+		}
+	}
+	
+	/**
 	 * @return boardState
 	 */
 	public String getPrintableBoard() {
