@@ -11,6 +11,11 @@
 package common;
 
 import hanto.common.*;
+import hanto.studentdbtrue.HantoGameFactory;
+import hanto.studentdbtrue.alpha.AlphaHantoGame;
+import hanto.studentdbtrue.beta.BetaHantoGame;
+import hanto.studentdbtrue.delta.DeltaHantoTestGame;
+import hanto.studentdbtrue.gamma.GammaHantoTestGame;
 
 /**
  * Description
@@ -18,7 +23,7 @@ import hanto.common.*;
  */
 public class HantoTestGameFactory
 {
-	private static final HantoTestGameFactory INSTANCE = new HantoTestGameFactory();
+	private static final HantoTestGameFactory instance = new HantoTestGameFactory();
 	
 	/**
 	 * Default private descriptor.
@@ -33,7 +38,7 @@ public class HantoTestGameFactory
 	 */
 	public static HantoTestGameFactory getInstance()
 	{
-		return INSTANCE;
+		return instance;
 	}
 	
 	/**
@@ -42,7 +47,7 @@ public class HantoTestGameFactory
 	 * @param gameId the version desired.
 	 * @return the game instance
 	 */
-	public HantoGame makeTestHantoGame(HantoGameID gameId)
+	public HantoTestGame makeHantoTestGame(HantoGameID gameId)
 	{
 		return makeHantoTestGame(gameId, HantoPlayerColor.BLUE);
 	}
@@ -53,27 +58,14 @@ public class HantoTestGameFactory
 	 * @param movesFirst the player color that moves first
 	 * @return the game instance
 	 */
-	public  HantoGame makeHantoTestGame(HantoGameID gameId, HantoPlayerColor movesFirst) {
-		HantoGame game = null;
+	public  HantoTestGame makeHantoTestGame(HantoGameID gameId, HantoPlayerColor movesFirst) {
+		HantoTestGame game = null;
 		switch (gameId) {
 			case GAMMA_HANTO:
 				game = new GammaHantoTestGame(movesFirst);
 				break;
-			case ALPHA_HANTO:
-				break;
-			case BETA_HANTO:
-				break;
 			case DELTA_HANTO:
-				break;
-			case EPSILON_HANTO:
-				break;
-			case IOTA_HANTO:
-				break;
-			case THETA_HANTO:
-				break;
-			case ZETA_HANTO:
-				break;
-			default:
+				game = new DeltaHantoTestGame(movesFirst);
 				break;
 		}
 		return game;

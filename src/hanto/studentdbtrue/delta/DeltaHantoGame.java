@@ -4,6 +4,7 @@
 package hanto.studentdbtrue.delta;
 
 import java.util.ArrayList;
+
 import hanto.common.HantoGame;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;

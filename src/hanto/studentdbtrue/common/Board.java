@@ -44,10 +44,14 @@ public class Board {
 	
 	 * @return HantoPiece  */
 	public HantoPiece getPieceAt(HantoCoordinate where) {
-		
+		HantoPiece p = null;
 		HantoCoordinateImpl myWhere = new HantoCoordinateImpl(where);
 		
-		return board.get(myWhere);
+		if (where != null) {
+			p = board.get(myWhere);
+		}
+		
+		return p;
 	}
 	
 	/**
@@ -85,8 +89,10 @@ public class Board {
 	public String getPrintableBoard() {
 		String boardState = "";
 		for (HantoCoordinate key: board.keySet()) {
-		    HantoPiece p = board.get(key);
-			boardState += p.getColor().toString() + " " + p.getType().toString() + " at (" + key.getX() + ", " + key.getY() + ")\n"; 
+			HantoPiece p = board.get(key);
+			if (p != null) {
+				boardState += p.getColor().toString() + " " + p.getType().toString() + " at (" + key.getX() + ", " + key.getY() + ")\n"; 
+			}
 		}
 		return boardState;
 	}

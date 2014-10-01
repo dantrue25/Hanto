@@ -81,4 +81,11 @@ public class PlayerState {
 		return color;
 	}
 	
+	/**
+	 * @return the pieces
+	 */
+	public List<HantoPieceType> getPieces () {
+		return pieces;
+	}
+	
 }

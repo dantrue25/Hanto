@@ -8,6 +8,7 @@ import hanto.common.HantoException;
 import hanto.common.HantoPieceType;
 import hanto.studentdbtrue.common.BaseHantoGame;
 import hanto.studentdbtrue.common.Board;
+import hanto.studentdbtrue.common.HantoCoordinateImpl;
 import hanto.studentdbtrue.common.rules.GameRule;
 
 /**
@@ -20,7 +21,9 @@ public class SpaceMustNotAlreadyBeOccupied extends GameRule {
 	public void check(BaseHantoGame game, Board board, HantoPieceType p, HantoCoordinate to,
 			HantoCoordinate from) throws HantoException {
 		
-		if (board.getPieceAt(to) != null) {
+		HantoCoordinateImpl myTo = new HantoCoordinateImpl(to);
+		
+		if (board.getPieceAt(myTo) != null && to != null) {
 			throw new HantoException ("A piece is already in that location.");
 		}		
 	}

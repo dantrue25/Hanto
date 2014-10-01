@@ -69,11 +69,11 @@ public class DeltaHantoTest {
 	}
 	
 	/**
-	 * Method butterflyWalksTwoHex.
+	 * Method butterflyAttemptsToWalkTwoHex.
 	 * @throws HantoException
 	 */
 	@Test(expected=HantoException.class)
-	public void butterflyWalksTwoHex() throws HantoException
+	public void butterflyAttemptsToWalkTwoHex() throws HantoException
 	{
 		game.makeMove(BUTTERFLY, null, new HantoCoordinateImpl(0, 0));
 		game.makeMove(BUTTERFLY, null, new HantoCoordinateImpl(0, 1));
@@ -96,11 +96,11 @@ public class DeltaHantoTest {
 	}
 	
 	/**
-	 * Method crabWalksTwoHex.
+	 * Method crabAttempsToWalkTwoHex.
 	 * @throws HantoException
 	 */
 	@Test(expected=HantoException.class)
-	public void crabWalksTwoHex() throws HantoException
+	public void crabAttempsToWalkTwoHex() throws HantoException
 	{
 		game.makeMove(BUTTERFLY, null, new HantoCoordinateImpl(0, 0));
 		game.makeMove(CRAB, null, new HantoCoordinateImpl(0, 1));
@@ -145,6 +145,51 @@ public class DeltaHantoTest {
 		game.makeMove(SPARROW, null, new HantoCoordinateImpl(0, 1));       // Red
 		game.makeMove(SPARROW, null, new HantoCoordinateImpl(-1, 0));      // Blue
 		game.makeMove(SPARROW, new HantoCoordinateImpl(0, 1), new HantoCoordinateImpl(-2, 1)); // Red
+	}
+	
+	/**
+	 * Method attemptToMoveANullPiece.
+	 * @throws HantoException
+	 */
+	@Test(expected=HantoException.class)
+	public void attemptToMoveANullPiece() throws HantoException
+	{
+		game.makeMove(null, null, new HantoCoordinateImpl(0, 0));
+	}
+	
+	/**
+	 * Method attemptToMoveToANullLocation.
+	 * @throws HantoException
+	 */
+	@Test(expected=HantoException.class)
+	public void attemptToMoveToANullLocation() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, null);
+	}
+	
+	/**
+	 * Method attempsToMovePieceButBlocked.
+	 * @throws HantoException
+	 */
+	@Test(expected=HantoException.class)
+	public void attempsToMovePieceButBlocked() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, new HantoCoordinateImpl(0, 0));   // Blue
+		game.makeMove(BUTTERFLY, null, new HantoCoordinateImpl(0, 1)); // Red
+		game.makeMove(SPARROW, null, new HantoCoordinateImpl(-1, 0));   // Blue
+		game.makeMove(SPARROW, null, new HantoCoordinateImpl(1, 1));   // Red
+		game.makeMove(BUTTERFLY, new HantoCoordinateImpl(0, 0), new HantoCoordinateImpl(-1, 1));   // Blue
+	}
+	
+	/**
+	 * Method attempsToMakeMoveWithToAndPieceNull.
+	 * @throws HantoException
+	 */
+	@Test(expected=HantoException.class)
+	public void attempsToMakeMoveWithToAndPieceNull() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, new HantoCoordinateImpl(0, 0));   // Blue
+		game.makeMove(null, new HantoCoordinateImpl(0, 0), null);
 	}
 	
 }

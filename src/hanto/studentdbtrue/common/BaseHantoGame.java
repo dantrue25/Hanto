@@ -23,6 +23,7 @@ import hanto.studentdbtrue.common.rules.base.FirstMoveMustBeAtOrigin;
 import hanto.studentdbtrue.common.rules.base.MustHavePieceToPlayIt;
 import hanto.studentdbtrue.common.rules.base.MustPlayButterflyByFourthTurn;
 import hanto.studentdbtrue.common.rules.base.PieceMustBeAdjacentToAnother;
+import hanto.studentdbtrue.common.rules.base.PieceTypeAndToMustBeValidIfNotResigning;
 import hanto.studentdbtrue.common.rules.base.PieceTypeMustBeCorrectToMoveIt;
 import hanto.studentdbtrue.common.rules.base.SpaceMustNotAlreadyBeOccupied;
 
@@ -35,7 +36,7 @@ import java.util.List;
  */
 public abstract class BaseHantoGame implements HantoGame {
 
-	private Board board;
+	protected Board board;
 	protected int turnNum = 1;
 	protected HantoPlayerColor movesFirst;
 	protected PlayerState bluePlayer = new PlayerState(HantoPlayerColor.BLUE);
@@ -143,6 +144,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	private void setUpBaseRuleSet () {
 		ruleSet = new ArrayList<GameRule>();
 		
+		ruleSet.add(new PieceTypeAndToMustBeValidIfNotResigning());
 		ruleSet.add(new MustPlayButterflyByFourthTurn());
 		ruleSet.add(new CantMovePieceThatIsntOnBoard());
 		ruleSet.add(new FirstMoveMustBeAtOrigin());
@@ -197,13 +199,6 @@ public abstract class BaseHantoGame implements HantoGame {
 	 */
 	public int getTurnNum() {
 		return turnNum;
-	}
-	
-	/**
-	 * @param turn
-	 */
-	public void setTurnNum (int turn) {
-		turnNum = turn;
 	}
 
 	/**

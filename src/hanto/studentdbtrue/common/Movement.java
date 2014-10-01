@@ -33,13 +33,6 @@ public class Movement {
 	}
 
 	/**
-	 * @param distance the distance to set
-	 */
-	public void setDistance(int distance) {
-		this.distance = distance;
-	}
-
-	/**
 	 * @return the type
 	 */
 	public HantoMovementType getMoveType() {
@@ -47,23 +40,9 @@ public class Movement {
 	}
 
 	/**
-	 * @param type the type to set
-	 */
-	public void setMoveType(HantoMovementType moveType) {
-		this.moveType = moveType;
-	}
-
-	/**
 	 * @return the pieceType
 	 */
 	public HantoPieceType getPieceType() {
 		return pieceType;
-	}
-
-	/**
-	 * @param pieceType the pieceType to set
-	 */
-	public void setPieceType(HantoPieceType pieceType) {
-		this.pieceType = pieceType;
 	}
 }

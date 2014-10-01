@@ -13,14 +13,14 @@ import hanto.studentdbtrue.common.Board;
  * @author Dan
  *
  */
-public class MustBeContinuous extends GameRule {
+public class PieceTypeAndToMustBeValid extends GameRule {
 
 	@Override
 	public void check(BaseHantoGame game, Board board, HantoPieceType p,
 			HantoCoordinate to, HantoCoordinate from) throws HantoException {
 		
-		if (from != null && !board.isContinuous(from, to)) {
-			throw new HantoException("Has to be continuous.");
+		if (p == null || to == null) {
+			throw new HantoException("The piece type and destination must be valid.");
 		}
 		
 	}
