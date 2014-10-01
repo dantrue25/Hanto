@@ -21,7 +21,7 @@ import java.util.Set;
  */
 public class Board {
 	
-	private Map<HantoCoordinate, HantoPiece> board;
+	private Map<HantoCoordinate, HantoPieceImpl> board;
 	protected HantoCoordinateImpl blueBLoc = null;
 	protected HantoCoordinateImpl redBLoc = null;
 	
@@ -29,7 +29,7 @@ public class Board {
 	 * Constructor for Board.
 	 */
 	public Board () {
-		board = new HashMap<HantoCoordinate, HantoPiece>();
+		board = new HashMap<HantoCoordinate, HantoPieceImpl>();
 	}
 	
 	/**
@@ -43,8 +43,8 @@ public class Board {
 	 * @param where HantoCoordinate
 	
 	 * @return HantoPiece  */
-	public HantoPiece getPieceAt(HantoCoordinate where) {
-		HantoPiece p = null;
+	public HantoPieceImpl getPieceAt(HantoCoordinate where) {
+		HantoPieceImpl p = null;
 		HantoCoordinateImpl myWhere = new HantoCoordinateImpl(where);
 		
 		if (where != null) {
@@ -169,7 +169,7 @@ public class Board {
 	 */
 	public int numOfPiecesOnBoard () {
 		int count = 0;
-		Collection<HantoPiece> pList = board.values();
+		Collection<HantoPieceImpl> pList = board.values();
 		
 		for (HantoPiece p : pList) {
 			if (p != null) {
@@ -187,23 +187,30 @@ public class Board {
 	 * @return boolean
 	 */
 	public boolean isContinuous (HantoCoordinate from, HantoCoordinate to) {
+		
 		boolean continuous = false;
+		int numPieces = numOfPiecesOnBoard();
 		List<HantoCoordinateImpl> visited = new ArrayList<HantoCoordinateImpl>();
 		
-		HantoPiece p = board.get(from);
-		board.remove(from);
-		board.put(to, p);
+		HantoCoordinateImpl myTo = new HantoCoordinateImpl(to);
+		HantoCoordinateImpl myFrom = new HantoCoordinateImpl(from);
+		
+		HantoPieceImpl p = getPieceAt(myFrom);
+		
+		removePieceOn(myFrom);
+		putPieceOn(myTo, p);
 		
 		List<HantoCoordinateImpl> connected = adjacentPieceCoords(from);
 		visited.add(connected.get(0));
 		constructConnectedPiecesList (visited, connected.get(0));
 		
-		if (visited.size() == numOfPiecesOnBoard()) {
+		if (visited.size() == numPieces) {
 			continuous = true;
 		}
 		
-		board.remove(to);
-		board.put(from, p);
+		removePieceOn(myTo);
+		putPieceOn(myFrom, p);
+		
 		return continuous;
 	}
 	

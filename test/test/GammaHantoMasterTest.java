@@ -25,7 +25,7 @@ import common.HantoTestGameFactory;
  * @author Dan
  *
  */
-public class GammaHantoTest {
+public class GammaHantoMasterTest {
 	private static HantoGameFactory factory = HantoGameFactory.getInstance();
 	private static HantoTestGameFactory testFactory = HantoTestGameFactory.getInstance();
 	private HantoGame game;

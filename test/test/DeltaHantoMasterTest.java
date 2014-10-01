@@ -19,7 +19,7 @@ import static hanto.common.HantoPieceType.*;
  * @author Dan
  *
  */
-public class DeltaHantoTest {
+public class DeltaHantoMasterTest {
 	private static HantoGameFactory factory = HantoGameFactory.getInstance();
 	private HantoGame game;
 

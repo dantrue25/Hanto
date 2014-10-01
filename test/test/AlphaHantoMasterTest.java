@@ -23,7 +23,7 @@ import static hanto.common.MoveResult.*;
 
 /**
  */
-public class AlphaHantoTest {
+public class AlphaHantoMasterTest {
 		/**
 		 * Internal class for these test cases.
 		 * @version Sep 13, 2014
