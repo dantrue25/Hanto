@@ -13,9 +13,9 @@ package common;
 import delta.DeltaHantoTestGame;
 import gamma.GammaHantoTestGame;
 import hanto.common.*;
-import hanto.studentdbtrue.HantoGameFactory;
-import hanto.studentdbtrue.alpha.AlphaHantoGame;
-import hanto.studentdbtrue.beta.BetaHantoGame;
+
+
+
 
 /**
  * Description

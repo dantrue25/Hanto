@@ -43,8 +43,8 @@ public class GammaHantoMasterTest {
 	
 	/**
 	 * Method makesBoardDiscontinuous.
-	 * @throws HantoException
-	 */
+	
+	 * @throws HantoException */
 	@Test(expected=HantoException.class)
 	public void makesBoardDiscontinuous() throws HantoException
 	{
@@ -59,8 +59,8 @@ public class GammaHantoMasterTest {
 	
 	/**
 	 * Method movesPieceStillContinuous.
-	 * @throws HantoException
-	 */
+	
+	 * @throws HantoException */
 	@Test
 	public void movesPieceStillContinuous() throws HantoException
 	{
@@ -76,8 +76,8 @@ public class GammaHantoMasterTest {
 	
 	/**
 	 * Method attempsToMovePieceButBlocked.
-	 * @throws HantoException
-	 */
+	
+	 * @throws HantoException */
 	@Test(expected=HantoException.class)
 	public void attempsToMovePieceButBlocked() throws HantoException
 	{
@@ -90,8 +90,8 @@ public class GammaHantoMasterTest {
 	
 	/**
 	 * Method movePieceNotBlocked.
-	 * @throws HantoException
-	 */
+	
+	 * @throws HantoException */
 	@Test
 	public void movePieceNotBlocked() throws HantoException
 	{
@@ -107,8 +107,8 @@ public class GammaHantoMasterTest {
 	
 	/**
 	 * Method movePieceMoreThanOneSpace.
-	 * @throws HantoException
-	 */
+	
+	 * @throws HantoException */
 	@Test(expected=HantoException.class)
 	public void movePieceMoreThanOneSpace() throws HantoException
 	{
@@ -121,6 +121,10 @@ public class GammaHantoMasterTest {
 		game.makeMove(SPARROW, new HantoCoordinateImpl(0, -1), new HantoCoordinateImpl(-2, 0));   // Blue	
 	}
 	
+	/**
+	 * Method makeMoveOn20thTurn.
+	 * @throws HantoException
+	 */
 	@Test
 	public void makeMoveOn20thTurn() throws HantoException
 	{
@@ -141,6 +145,10 @@ public class GammaHantoMasterTest {
 		assertEquals(MoveResult.DRAW, r2);
 	}
 	
+	/**
+	 * Method makeMoveOn19thTurn.
+	 * @throws HantoException
+	 */
 	@Test
 	public void makeMoveOn19thTurn() throws HantoException
 	{
@@ -164,8 +172,8 @@ public class GammaHantoMasterTest {
 	
 	/**
 	 * Method attemptToMakeMoveWithNullDestination.
-	 * @throws HantoException
-	 */
+	
+	 * @throws HantoException */
 	@Test(expected=HantoException.class)
 	public void attemptToMakeMoveWithNullDestination() throws HantoException
 	{
@@ -180,8 +188,8 @@ public class GammaHantoMasterTest {
 	
 	/**
 	 * Method attemptToMakeMoveNextToOpposing.
-	 * @throws HantoException
-	 */
+	
+	 * @throws HantoException */
 	@Test(expected=HantoException.class)
 	public void attemptToMakeMoveNextToOpposing() throws HantoException
 	{

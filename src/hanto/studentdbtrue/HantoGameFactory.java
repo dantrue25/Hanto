@@ -73,16 +73,8 @@ public class HantoGameFactory
 		case DELTA_HANTO:
 			game = new DeltaHantoGame(movesFirst);
 			break;
-		case EPSILON_HANTO:
-			break;
 		case GAMMA_HANTO:
 			game = new GammaHantoGame(movesFirst);
-			break;
-		case IOTA_HANTO:
-			break;
-		case THETA_HANTO:
-			break;
-		case ZETA_HANTO:
 			break;
 		default:
 			break;
