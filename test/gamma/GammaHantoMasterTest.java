@@ -1,7 +1,7 @@
 /**
  * 
  */
-package test;
+package gamma;
 
 import static hanto.common.HantoPieceType.BUTTERFLY;
 import static hanto.common.HantoPieceType.SPARROW;

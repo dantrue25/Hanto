@@ -8,7 +8,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package test;
+package alpha;
 
 import hanto.common.*;
 import hanto.studentdbtrue.HantoGameFactory;

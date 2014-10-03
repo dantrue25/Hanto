@@ -1,7 +1,7 @@
 /**
  * 
  */
-package test;
+package delta;
 
 import hanto.common.*;
 import hanto.studentdbtrue.HantoGameFactory;
