@@ -1,12 +1,13 @@
 /**
  * 
  */
-package hanto.studentdbtrue.delta;
+package delta;
 
 import common.HantoTestGame;
 import hanto.common.HantoPlayerColor;
 import hanto.studentdbtrue.common.HantoCoordinateImpl;
 import hanto.studentdbtrue.common.HantoPieceImpl;
+import hanto.studentdbtrue.delta.DeltaHantoGame;
 
 /**
  * @author Dan
