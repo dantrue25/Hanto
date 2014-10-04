@@ -83,6 +83,10 @@ public class Board {
 		}
 	}
 	
+	public void clear () {
+		board.clear();
+	}
+	
 	/**
 	 * @return boardState
 	 */

@@ -22,6 +22,7 @@ import hanto.studentdbtrue.common.rules.base.CantMovePieceThatIsntOnBoard;
 import hanto.studentdbtrue.common.rules.base.FirstMoveMustBeAtOrigin;
 import hanto.studentdbtrue.common.rules.base.MustHavePieceToPlayIt;
 import hanto.studentdbtrue.common.rules.base.MustPlayButterflyByFourthTurn;
+import hanto.studentdbtrue.common.rules.base.OnlyMovePieceOfYourColor;
 import hanto.studentdbtrue.common.rules.base.PieceMustBeAdjacentToAnother;
 import hanto.studentdbtrue.common.rules.base.PieceTypeAndToMustBeValidIfNotResigning;
 import hanto.studentdbtrue.common.rules.base.PieceTypeMustBeCorrectToMoveIt;
@@ -145,6 +146,7 @@ public abstract class BaseHantoGame implements HantoGame {
 		ruleSet = new ArrayList<GameRule>();
 		
 		ruleSet.add(new PieceTypeAndToMustBeValidIfNotResigning());
+		ruleSet.add(new OnlyMovePieceOfYourColor());
 		ruleSet.add(new MustPlayButterflyByFourthTurn());
 		ruleSet.add(new CantMovePieceThatIsntOnBoard());
 		ruleSet.add(new FirstMoveMustBeAtOrigin());

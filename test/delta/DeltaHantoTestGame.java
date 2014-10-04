@@ -21,7 +21,7 @@ public class DeltaHantoTestGame extends DeltaHantoGame implements HantoTestGame 
 
 	@Override
 	public void initializeBoard(PieceLocationPair[] initialPieces) {
-		
+		board.clear();
 		for (int i = 0; i < initialPieces.length; i++) {
 			HantoPieceImpl newPiece = new HantoPieceImpl(initialPieces[i].pieceType, initialPieces[i].player);
 			board.putPieceOn(new HantoCoordinateImpl(initialPieces[i].location), newPiece);
@@ -30,11 +30,11 @@ public class DeltaHantoTestGame extends DeltaHantoGame implements HantoTestGame 
 		}
 		
 		turnNum = (initialPieces.length / 2);
-		setCurrentPlayer(movesFirst);
 		
-		if (initialPieces.length % 2 == 1) {
-			switchPlayers();
-		}
+		setCurrentPlayer(movesFirst);
+//		if (initialPieces.length % 2 == 1) {
+//			switchPlayers();
+//		}
 
 	}
 
