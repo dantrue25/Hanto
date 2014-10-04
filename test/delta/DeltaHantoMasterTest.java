@@ -192,4 +192,16 @@ public class DeltaHantoMasterTest {
 		game.makeMove(null, new HantoCoordinateImpl(0, 0), null);
 	}
 	
+	/**
+	 * Method attempsToMoveOtherPlayersPiece.
+	 * @throws HantoException
+	 */
+	@Test(expected=HantoException.class)
+	public void attempsToMoveOtherPlayersPiece() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, new HantoCoordinateImpl(0, 0));   // Blue
+		game.makeMove(BUTTERFLY, null, new HantoCoordinateImpl(0, 1));   // Red
+		game.makeMove(BUTTERFLY, new HantoCoordinateImpl(0, 1), new HantoCoordinateImpl(-1, 0));
+	}
+	
 }
