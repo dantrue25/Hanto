@@ -22,8 +22,5 @@ public class CantMakeMoveAfterGameIsOver extends GameRule {
 		if (game.isGameOver()) {
 			throw new HantoException("Cant move piece if game is over.");
 		}
-		
 	}
-
-
 }

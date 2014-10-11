@@ -44,7 +44,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	protected PlayerState redPlayer = new PlayerState(HantoPlayerColor.RED);
 	protected PlayerState currentPlayer;
 	protected List<GameRule> ruleSet;
-	private boolean gameOver;
+	protected boolean gameOver;
 	protected boolean redResigns;
 	protected boolean blueResigns;
 	protected List<Movement> movementList;
@@ -83,20 +83,16 @@ public abstract class BaseHantoGame implements HantoGame {
 		for (GameRule r : ruleSet) {
 			r.check(this, board, pieceType, to, from);
 		}
-		
-		checkForResignation();
-		
-		if (!gameOver) {			
-			if (from != null) {
-				board.removePieceOn(myFrom);
-			}
-			else {
-				currentPlayer.removePiece(pieceType);
-			}
-			
-			// Put piece onto the board
-			board.putPieceOn(myTo, p);
+					
+		if (from != null) {
+			board.removePieceOn(myFrom);
 		}
+		else {
+			currentPlayer.removePiece(pieceType);
+		}
+
+		// Put piece onto the board
+		board.putPieceOn(myTo, p);
 		
 		// Increment turn when needed
 		if(currentPlayer.getColor() != movesFirst) {
@@ -120,11 +116,11 @@ public abstract class BaseHantoGame implements HantoGame {
 			result = MoveResult.DRAW;
 			setGameOver(true);
 		}
-		else if(board.isSurrounded(board.blueBLoc) || blueResigns) {
+		else if(board.isSurrounded(board.blueBLoc)) {
 			result = MoveResult.RED_WINS;
 			setGameOver(true);
 		}
-		else if(board.isSurrounded(board.redBLoc) || redResigns) {
+		else if(board.isSurrounded(board.redBLoc)) {
 			result = MoveResult.BLUE_WINS;
 			setGameOver(true);
 		}
@@ -133,12 +129,6 @@ public abstract class BaseHantoGame implements HantoGame {
 		}
 		
 		return result;
-	}
-	
-	private void checkForResignation () {
-		if (blueResigns || redResigns) {
-			gameOver = true;
-		}
 	}
 	
 	// Add rules to the base game
@@ -234,20 +224,6 @@ public abstract class BaseHantoGame implements HantoGame {
 	 */
 	public void setGameOver(boolean isGameOver) {
 		gameOver = isGameOver;
-	}
-	
-	/**
-	 * 
-	 */
-	public void makeRedResign () {
-		redResigns = true;
-	}
-	
-	/**
-	 * 
-	 */
-	public void makeBlueResign () {
-		blueResigns = true;
 	}
 
 }
