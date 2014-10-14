@@ -1,21 +1,22 @@
 /**
  * 
  */
-package delta;
+package epsilon;
 
-import common.HantoTestGame;
 import hanto.common.HantoPlayerColor;
 import hanto.studentdbtrue.common.HantoCoordinateImpl;
 import hanto.studentdbtrue.common.HantoPieceImpl;
-import hanto.studentdbtrue.delta.DeltaHantoGame;
+import hanto.studentdbtrue.epsilon.EpsilonHantoGame;
+import common.HantoTestGame;
 
 /**
  * @author Dan
  *
  */
-public class DeltaHantoTestGame extends DeltaHantoGame implements HantoTestGame {
+public class EpsilonHantoTestGame extends EpsilonHantoGame implements
+		HantoTestGame {
 
-	public DeltaHantoTestGame(HantoPlayerColor movesFirst) {
+	public EpsilonHantoTestGame(HantoPlayerColor movesFirst) {
 		super(movesFirst);
 	}
 
