@@ -239,17 +239,13 @@ public abstract class BaseHantoGame implements HantoGame {
 		Set<HantoPieceType> piecesLeft =  new HashSet<HantoPieceType>();
 		piecesLeft.addAll(currentPlayer.getPieces());
 		
-		System.out.println("\nTurn:" + turnNum);
-		System.out.println("Player:" + currentPlayer.getColor());
-		System.out.println("Valid move at:");
-		
 		for (HantoPieceType p : piecesLeft) {
 			for (HantoCoordinate to : possiblePlace) {
 				try {
 					for (GameRule r : ruleSet) {
 						r.check(this, board, p, to, null);
 					}
-					System.out.println(p.getPrintableName() + ", to: (" + to.getX() + ", " + to.getY() + ")");
+					
 					validMoves.add(new HantoMove(p, null, to));
 				} catch (HantoException e) { }
 			}
@@ -263,7 +259,7 @@ public abstract class BaseHantoGame implements HantoGame {
 					for (GameRule r : ruleSet) {
 						r.check(this, board, getPieceAt(from).getType(), to, from);
 					}
-					System.out.println(getPieceAt(from).getType().getPrintableName() + ", from: (" + from.getX() + ", " + from.getY() + ")" + ", to: (" + to.getX() + ", " + to.getY() + ")");
+					
 					validMoves.add(new HantoMove(getPieceAt(from).getType(), from, to));
 				} catch (HantoException e) { }
 			}
