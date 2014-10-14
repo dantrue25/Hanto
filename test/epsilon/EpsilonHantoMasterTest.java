@@ -6,6 +6,7 @@ package epsilon;
 import static hanto.common.HantoPieceType.BUTTERFLY;
 import static hanto.common.HantoPieceType.HORSE;
 import static hanto.common.HantoPieceType.CRAB;
+import static hanto.common.HantoPieceType.SPARROW;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
@@ -110,4 +111,22 @@ public class EpsilonHantoMasterTest {
 		MoveResult r = game.makeMove(HORSE, new HantoCoordinateImpl(0, 2), new HantoCoordinateImpl(0, -2));   // Red
 		assertEquals(MoveResult.OK, r);	
 	}
+	
+	/**
+	 * 
+	 * @throws HantoException
+	 */
+	@Test(expected=HantoException.class)
+	public void sparrowFliesLessThan4Spaces() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, new HantoCoordinateImpl(0, 0));   // Blue
+		game.makeMove(BUTTERFLY, null, new HantoCoordinateImpl(0, 1)); // Red
+		game.makeMove(SPARROW, null, new HantoCoordinateImpl(-1, 0));   // Blue
+		game.makeMove(HORSE, null, new HantoCoordinateImpl(0, 2));   // Red
+		game.makeMove(HORSE, null, new HantoCoordinateImpl(0, -1)); // Blue
+		game.makeMove(CRAB, null, new HantoCoordinateImpl(0, 3));   // Red
+		MoveResult r = game.makeMove(SPARROW, new HantoCoordinateImpl(-1, 0), new HantoCoordinateImpl(0, 4));   // Blue
+		assertEquals(MoveResult.OK, r);
+	}
+	
 }

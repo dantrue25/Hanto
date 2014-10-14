@@ -21,6 +21,7 @@ import hanto.studentdbtrue.common.rules.CrabWalksOneHex;
 import hanto.studentdbtrue.common.rules.JumpersJumpCorrectly;
 import hanto.studentdbtrue.common.rules.MustBeContinuous;
 import hanto.studentdbtrue.common.rules.NewPieceMustBeAdjacentToOwnColor;
+import hanto.studentdbtrue.common.rules.SparrowsFlyMaxFourSpaces;
 import hanto.studentdbtrue.common.rules.WalkersCantMoveIfBlocked;
 
 /**
@@ -65,6 +66,7 @@ public class EpsilonHantoGame extends BaseHantoGame implements HantoGame {
 		ruleSet.add(new CrabWalksOneHex());
 		ruleSet.add(new WalkersCantMoveIfBlocked());
 		ruleSet.add(new JumpersJumpCorrectly());
+		ruleSet.add(new SparrowsFlyMaxFourSpaces());
 	}
 	
 	private void setUpPieceMovements () {

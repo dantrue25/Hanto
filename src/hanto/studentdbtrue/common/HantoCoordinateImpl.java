@@ -128,6 +128,22 @@ public class HantoCoordinateImpl implements HantoCoordinate {
 		
 		return coordsInbetween;
 	}
+	
+	public int distance (HantoCoordinate other) {		
+		int x1, x2, y1, y2, z1, z2;
+		
+		x1 = this.getX();
+		y1 = this.getY();
+		z1 = -1 * (x1 + y1);
+		
+		x2 = other.getX();
+		y2 = other.getY();
+		z2 = -1 * (x2 + y2);		
+		
+		int distance = Math.max((x2-x1), Math.max((y2-y1), (z2-z1)));
+		
+		return distance;
+	}
 
 	@Override
 	public int hashCode() {
