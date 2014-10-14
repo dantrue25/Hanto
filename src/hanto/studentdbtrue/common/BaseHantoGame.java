@@ -46,7 +46,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	protected PlayerState redPlayer = new PlayerState(HantoPlayerColor.RED);
 	protected PlayerState currentPlayer;
 	protected List<GameRule> ruleSet;
-	protected boolean gameOver;
+	protected boolean gameOver = false;
 	protected boolean redResigns;
 	protected boolean blueResigns;
 	protected List<Movement> movementList;
@@ -230,7 +230,7 @@ public abstract class BaseHantoGame implements HantoGame {
 	
 	/**
 	 * 
-	 * @return
+	 * @return validMoves
 	 */
 	public List<HantoMove> getAllValidMoves () {
 		List<HantoCoordinate> possiblePlace = board.getEmptySpaces();
@@ -239,15 +239,22 @@ public abstract class BaseHantoGame implements HantoGame {
 		Set<HantoPieceType> piecesLeft =  new HashSet<HantoPieceType>();
 		piecesLeft.addAll(currentPlayer.getPieces());
 		
+		boolean validMove = false;
+		
 		for (HantoPieceType p : piecesLeft) {
 			for (HantoCoordinate to : possiblePlace) {
 				try {
 					for (GameRule r : ruleSet) {
 						r.check(this, board, p, to, null);
 					}
-					
-					validMoves.add(new HantoMove(p, null, to));
-				} catch (HantoException e) { }
+					validMove = true;
+				} catch (HantoException e) {
+					validMove = false;
+				} finally {
+					if (validMove) {
+						validMoves.add(new HantoMove(p, null, to));
+					}
+				}
 			}
 		}
 		
@@ -259,9 +266,14 @@ public abstract class BaseHantoGame implements HantoGame {
 					for (GameRule r : ruleSet) {
 						r.check(this, board, getPieceAt(from).getType(), to, from);
 					}
-					
-					validMoves.add(new HantoMove(getPieceAt(from).getType(), from, to));
-				} catch (HantoException e) { }
+					validMove = true;
+				} catch (HantoException e) {
+					validMove = false;
+				} finally {
+					if (validMove) {
+						validMoves.add(new HantoMove(getPieceAt(from).getType(), from, to));
+					}
+				}
 			}
 		}
 		

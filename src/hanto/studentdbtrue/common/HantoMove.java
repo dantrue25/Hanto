@@ -18,6 +18,9 @@ public class HantoMove {
 	
 	/**
 	 * 
+	 * @param p
+	 * @param f
+	 * @param t
 	 */
 	public HantoMove (HantoPieceType p, HantoCoordinate f, HantoCoordinate t) {
 		pieceType = p;

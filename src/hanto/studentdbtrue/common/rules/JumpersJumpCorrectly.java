@@ -49,8 +49,9 @@ public class JumpersJumpCorrectly extends GameRule {
 			
 			isValidJumpDirection = (isDiagonal || isSingleDirection) && distance > 1; // One (and only one) direction has to be 0
 			
-			if (!isValidJumpDirection)
+			if (!isValidJumpDirection) {
 				throw new HantoException("Jump direction is not correct.");
+			}
 			else {
 				List<HantoCoordinateImpl> inbetween = myTo.getCoordsInbetween(myFrom);
 				for (HantoCoordinateImpl c : inbetween) {

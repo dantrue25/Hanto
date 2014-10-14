@@ -29,7 +29,6 @@ import hanto.studentdbtrue.common.rules.PieceTypeAndToMustBeValid;
  */
 public class GammaHantoGame extends BaseHantoGame implements HantoGame {
 
-	boolean gameOver = false;
 	/**
 	 * 
 	 */
