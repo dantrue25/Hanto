@@ -80,6 +80,54 @@ public class HantoCoordinateImpl implements HantoCoordinate {
 		myNeighbors.retainAll(otherNeighbors);
 		return myNeighbors;
 	}
+	
+	/**
+	 * 
+	 * @param other
+	 * @return coordsInbetween
+	 */
+	public List<HantoCoordinateImpl> getCoordsInbetween (HantoCoordinateImpl other) {
+		List<HantoCoordinateImpl> coordsInbetween = new ArrayList<HantoCoordinateImpl>();
+		
+		int deltaX = this.getX() - other.getX();
+		int deltaY = this.getY() - other.getY();
+		
+		boolean isDiagonal = (deltaY == -1 * deltaX) && deltaY != 0;
+		boolean isSingleDirection = ((deltaX == 0) != (deltaY == 0));
+		
+		if (isDiagonal && deltaX > 0) {
+			for (int i = 1; i < deltaX; i++) {
+				coordsInbetween.add(new HantoCoordinateImpl(other.getX() + i, other.getY() - i));
+			}
+		}
+		else if (isDiagonal && deltaY > 0) {
+			for (int i = 1; i < deltaY; i++) {
+				coordsInbetween.add(new HantoCoordinateImpl(this.getX() + i, this.getY() - i));
+			}
+		}
+		else if (isSingleDirection && deltaX > 0) {
+			for (int i = 1; i < deltaX; i++) {
+				coordsInbetween.add(new HantoCoordinateImpl(other.getX() + i, other.getY()));
+			}
+		}
+		else if (isSingleDirection && deltaX < 0) {
+			for (int i = 1; i < Math.abs(deltaX); i++) {
+				coordsInbetween.add(new HantoCoordinateImpl(this.getX() + i, this.getY()));
+			}
+		}
+		else if (isSingleDirection && deltaY > 0) {
+			for (int i = 1; i < deltaY; i++) {
+				coordsInbetween.add(new HantoCoordinateImpl(other.getX(), other.getY() + i));
+			}
+		}
+		else if (isSingleDirection && deltaY < 0) {
+			for (int i = 1; i < Math.abs(deltaY); i++) {
+				coordsInbetween.add(new HantoCoordinateImpl(this.getX(), this.getY() + i));
+			}
+		}
+		
+		return coordsInbetween;
+	}
 
 	@Override
 	public int hashCode() {

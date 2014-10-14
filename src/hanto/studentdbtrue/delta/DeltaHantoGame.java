@@ -75,9 +75,6 @@ public class DeltaHantoGame extends BaseHantoGame implements HantoGame {
 		
 		// If player resigns, do not run makeMove, but set gameOver to true, and set the moveResult to win
 		if (pieceType == null && to == null && from == null) {
-//			if (getAllValidMoves().size() != 0) {
-//				throw new HantoPrematureResignationException();
-//			}
 			if (getCurrentPlayer().getColor() == HantoPlayerColor.RED) {
 				r = MoveResult.BLUE_WINS;
 			}

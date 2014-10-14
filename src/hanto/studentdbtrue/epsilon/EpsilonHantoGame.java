@@ -5,9 +5,13 @@ package hanto.studentdbtrue.epsilon;
 
 import java.util.ArrayList;
 
+import hanto.common.HantoCoordinate;
+import hanto.common.HantoException;
 import hanto.common.HantoGame;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+import hanto.common.HantoPrematureResignationException;
+import hanto.common.MoveResult;
 import hanto.studentdbtrue.common.BaseHantoGame;
 import hanto.studentdbtrue.common.HantoMovementType;
 import hanto.studentdbtrue.common.Movement;
@@ -70,6 +74,34 @@ public class EpsilonHantoGame extends BaseHantoGame implements HantoGame {
 		movementList.add(new Movement(HantoPieceType.CRAB, HantoMovementType.WALK, 1));
 		movementList.add(new Movement(HantoPieceType.SPARROW, HantoMovementType.FLY, 4));
 		movementList.add(new Movement(HantoPieceType.HORSE, HantoMovementType.JUMP, -1));
+	}
+	
+	@Override
+	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
+			HantoCoordinate to) throws HantoException {
+		
+		MoveResult r;
+		
+		// If player resigns, do not run makeMove, but set gameOver to true, and set the moveResult to win
+		if (pieceType == null && to == null && from == null) {
+			if (getAllValidMoves().size() != 0) {
+				throw new HantoPrematureResignationException();
+			}
+			if (getCurrentPlayer().getColor() == HantoPlayerColor.RED) {
+				r = MoveResult.BLUE_WINS;
+			}
+			else {
+				r = MoveResult.RED_WINS;
+			}
+			
+			gameOver = true;
+			switchPlayers();
+		} 
+		else {
+			r = super.makeMove(pieceType, from, to);
+		}
+		
+		return r;
 	}
 	
 }
