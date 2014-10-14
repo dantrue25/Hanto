@@ -7,6 +7,7 @@ import hanto.common.HantoCoordinate;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -137,6 +138,23 @@ public class Board {
 		return adjacent;
 	}
 	
+	private List<HantoCoordinateImpl> emptyNeighborCoords (HantoCoordinate loc) {
+		HantoCoordinateImpl myLoc = new HantoCoordinateImpl(loc);
+		
+		List<HantoCoordinateImpl> empty = new ArrayList<HantoCoordinateImpl>();
+		List<HantoCoordinateImpl> neighbors = myLoc.getNeighbors();
+		HantoPiece[] piece = new HantoPiece[6];
+		
+		for(int i = 0; i < 6; i++) {
+			piece[i] = board.get(neighbors.get(i));
+			if (piece[i] == null) {
+				empty.add(neighbors.get(i));
+			}
+		}
+		
+		return empty;
+	}
+	
 	/**
 	 * Method isSurrounded.
 	 * @param loc HantoCoordinate
@@ -216,6 +234,44 @@ public class Board {
 		putPieceOn(myFrom, p);
 		
 		return continuous;
+	}
+	
+	/**
+	 * 
+	 * @return emptySpacesList
+	 */
+	public List<HantoCoordinate> getEmptySpaces () {
+		Set<HantoCoordinate> emptySpacesSet = new HashSet<HantoCoordinate>();
+		List<HantoCoordinate> emptySpacesList = new ArrayList<HantoCoordinate>();
+		
+		for (HantoCoordinate c : board.keySet()) {
+			emptySpacesSet.addAll(emptyNeighborCoords(c));
+		}
+		
+		emptySpacesList.addAll(emptySpacesSet);
+		
+		if (isEmpty()) {
+			emptySpacesList.add(new HantoCoordinateImpl(0, 0));
+		}
+		
+		return emptySpacesList;
+	}
+	
+	/**
+	 * 
+	 * @param pColor
+	 * @return playersCoords
+	 */
+	public List<HantoCoordinate> getAllCoordsOfCertainColor (HantoPlayerColor pColor) {
+		List<HantoCoordinate> playersCoords = new ArrayList<HantoCoordinate>();
+		
+		for (HantoCoordinate c : board.keySet()) {
+			if (getPieceAt(c).getColor() == pColor) {
+				playersCoords.add(c);
+			}
+		}
+		
+		return playersCoords;
 	}
 	
 }

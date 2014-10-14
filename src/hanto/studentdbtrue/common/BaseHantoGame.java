@@ -29,7 +29,9 @@ import hanto.studentdbtrue.common.rules.base.PieceTypeMustBeCorrectToMoveIt;
 import hanto.studentdbtrue.common.rules.base.SpaceMustNotAlreadyBeOccupied;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Dan
@@ -224,6 +226,50 @@ public abstract class BaseHantoGame implements HantoGame {
 	 */
 	public void setGameOver(boolean isGameOver) {
 		gameOver = isGameOver;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public List<HantoMove> getAllValidMoves () {
+		List<HantoCoordinate> possiblePlace = board.getEmptySpaces();
+		List<HantoMove> validMoves = new ArrayList<HantoMove>();
+		
+		Set<HantoPieceType> piecesLeft =  new HashSet<HantoPieceType>();
+		piecesLeft.addAll(currentPlayer.getPieces());
+		
+		System.out.println("\nTurn:" + turnNum);
+		System.out.println("Player:" + currentPlayer.getColor());
+		System.out.println("Valid move at:");
+		
+		for (HantoPieceType p : piecesLeft) {
+			for (HantoCoordinate to : possiblePlace) {
+				try {
+					for (GameRule r : ruleSet) {
+						r.check(this, board, p, to, null);
+					}
+					System.out.println(p.getPrintableName() + ", to: (" + to.getX() + ", " + to.getY() + ")");
+					validMoves.add(new HantoMove(p, null, to));
+				} catch (HantoException e) { }
+			}
+		}
+		
+		List<HantoCoordinate> movablePieceLocations = board.getAllCoordsOfCertainColor(currentPlayer.getColor());
+		
+		for (HantoCoordinate from : movablePieceLocations) {
+			for (HantoCoordinate to : possiblePlace) {
+				try {
+					for (GameRule r : ruleSet) {
+						r.check(this, board, getPieceAt(from).getType(), to, from);
+					}
+					System.out.println(getPieceAt(from).getType().getPrintableName() + ", from: (" + from.getX() + ", " + from.getY() + ")" + ", to: (" + to.getX() + ", " + to.getY() + ")");
+					validMoves.add(new HantoMove(getPieceAt(from).getType(), from, to));
+				} catch (HantoException e) { }
+			}
+		}
+		
+		return validMoves;
 	}
 
 }
