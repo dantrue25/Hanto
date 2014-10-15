@@ -129,6 +129,11 @@ public class HantoCoordinateImpl implements HantoCoordinate {
 		return coordsInbetween;
 	}
 	
+	/**
+	 * 
+	 * @param other
+	 * @return the distance between two coordinates
+	 */
 	public int distance (HantoCoordinate other) {
 		if (other != null) {
 			int deltaX = this.getX() - other.getX();

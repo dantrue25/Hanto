@@ -26,8 +26,8 @@ public class HantoPlayer implements HantoGamePlayer {
 	private BaseHantoGame game;
 	private HantoGameFactory factory;
 	
-	/* (non-Javadoc)
-	 * @see hanto.tournament.HantoGamePlayer#startGame(hanto.common.HantoGameID, hanto.common.HantoPlayerColor, boolean)
+	/**
+	 * 
 	 */
 	@Override
 	public void startGame(HantoGameID version, HantoPlayerColor myColor,
@@ -58,8 +58,8 @@ public class HantoPlayer implements HantoGamePlayer {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see hanto.tournament.HantoGamePlayer#makeMove(hanto.tournament.HantoMoveRecord)
+	/**
+	 * 
 	 */
 	@Override
 	public HantoMoveRecord makeMove(HantoMoveRecord opponentsMove) {
@@ -70,13 +70,17 @@ public class HantoPlayer implements HantoGamePlayer {
 				game.makeMove(HantoPieceType.BUTTERFLY, null, new HantoCoordinateImpl(0, 0));
 				myMove = new HantoMoveRecord(HantoPieceType.BUTTERFLY, null, new HantoCoordinateImpl(0, 0));
 			} 
-			catch (HantoException e){}
+			catch (HantoException e) {
+				System.out.println("Move was invalid.");
+			}
 		}
 		else {
 			try {
 				game.makeMove(opponentsMove.getPiece(), opponentsMove.getFrom(), opponentsMove.getTo());
 			} 
-			catch (HantoException e){}
+			catch (HantoException e) {
+				System.out.println("Move was invalid.");
+			}
 			
 			List<HantoMove> validMoves = game.getAllValidMoves();
 			int moveSelection = (int) (Math.random() * validMoves.size());
@@ -93,7 +97,9 @@ public class HantoPlayer implements HantoGamePlayer {
 			try {
 				game.makeMove(myMove.getPiece(), myMove.getFrom(), myMove.getTo());
 			}
-			catch (HantoException e){}
+			catch (HantoException e) {
+				System.out.println("Move was invalid.");
+			}
 		}
 		
 		return myMove;

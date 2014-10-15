@@ -160,4 +160,14 @@ public class EpsilonHantoMasterTest {
 		assertEquals(7, dist);
 	}
 	
+	@Test
+	public void playSampleGame()
+	{
+		GameDirector gd = new GameDirector();
+		gd.run();
+		gd = new GameDirector();
+		gd.run();
+		
+	}
+	
 }

@@ -250,10 +250,10 @@ public abstract class BaseHantoGame implements HantoGame {
 					validMove = true;
 				} catch (HantoException e) {
 					validMove = false;
-				} finally {
-					if (validMove) {
-						validMoves.add(new HantoMove(p, null, to));
-					}
+				}
+				
+				if (validMove) {
+					validMoves.add(new HantoMove(p, null, to));
 				}
 			}
 		}
@@ -269,10 +269,10 @@ public abstract class BaseHantoGame implements HantoGame {
 					validMove = true;
 				} catch (HantoException e) {
 					validMove = false;
-				} finally {
-					if (validMove) {
-						validMoves.add(new HantoMove(getPieceAt(from).getType(), from, to));
-					}
+				}
+			
+				if (validMove) {
+					validMoves.add(new HantoMove(getPieceAt(from).getType(), from, to));
 				}
 			}
 		}
