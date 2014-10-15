@@ -26,7 +26,7 @@ public class MustPlayButterflyByFourthTurn extends GameRule {
 			HantoCoordinate from
 			) throws HantoException {
 		
-		if (game.getTurnNum() == 4 
+		if (game.getTurnNum() == 3 
 				&& game.getCurrentPlayer().hasPieceOfType(HantoPieceType.BUTTERFLY) 
 				&& pieceTypePlayed != HantoPieceType.BUTTERFLY) {
 			

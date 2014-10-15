@@ -20,10 +20,9 @@ public class SparrowsFlyMaxFourSpaces extends GameRule {
 	public void check(BaseHantoGame game, Board board, HantoPieceType p,
 			HantoCoordinate to, HantoCoordinate from) throws HantoException {
 		
-		HantoCoordinateImpl myTo = new HantoCoordinateImpl(to);
 		HantoCoordinateImpl myFrom = new HantoCoordinateImpl(from);
 		
-		if (p == HantoPieceType.SPARROW && myTo.distance(myFrom) > 4) {
+		if (p == HantoPieceType.SPARROW && myFrom.distance(to) > 4) {
 			throw new HantoException("Sparrow cant fly more than 4 spaces.");
 		}
 		

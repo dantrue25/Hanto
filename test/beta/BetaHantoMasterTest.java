@@ -279,16 +279,14 @@ public class BetaHantoMasterTest {
 	 * @throws HantoException
 	 */
 	@Test
-	public void playButterflyOnFourthTurnBlue() throws HantoException
+	public void playButterflyOnThirdTurnBlue() throws HantoException
 	{
 		gameBlueFirst.makeMove(SPARROW, null, new TestHantoCoordinate(0, 0));   // Blue
 		gameBlueFirst.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 1)); // Red
 		gameBlueFirst.makeMove(SPARROW, null, new TestHantoCoordinate(1, 1));   // Blue
 		gameBlueFirst.makeMove(SPARROW, null, new TestHantoCoordinate(0, 2));   // Red
-		gameBlueFirst.makeMove(SPARROW, null, new TestHantoCoordinate(0, 3));   // Blue
-		gameBlueFirst.makeMove(SPARROW, null, new TestHantoCoordinate(0, 4));   // Red
+		MoveResult mr = gameBlueFirst.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 3));   // Blue
 		
-		MoveResult mr = gameBlueFirst.makeMove(BUTTERFLY, null, new TestHantoCoordinate(-1, 0));
 		assertEquals(OK, mr);
 	}
 	
@@ -303,10 +301,8 @@ public class BetaHantoMasterTest {
 		gameRedFirst.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 1)); 
 		gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate(1, 1));  
 		gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate(0, 2));  
-		gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate(0, 3));  
-		gameRedFirst.makeMove(SPARROW, null, new TestHantoCoordinate(0, 4));
+		MoveResult mr = gameRedFirst.makeMove(BUTTERFLY, null, new TestHantoCoordinate(0, 3));
 		
-		MoveResult mr = gameRedFirst.makeMove(BUTTERFLY, null, new TestHantoCoordinate(-1, 0));
 		assertEquals(OK, mr);
 	}
 	

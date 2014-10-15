@@ -129,20 +129,30 @@ public class HantoCoordinateImpl implements HantoCoordinate {
 		return coordsInbetween;
 	}
 	
-	public int distance (HantoCoordinate other) {		
-		int x1, x2, y1, y2, z1, z2;
-		
-		x1 = this.getX();
-		y1 = this.getY();
-		z1 = -1 * (x1 + y1);
-		
-		x2 = other.getX();
-		y2 = other.getY();
-		z2 = -1 * (x2 + y2);		
-		
-		int distance = Math.max((x2-x1), Math.max((y2-y1), (z2-z1)));
-		
-		return distance;
+	public int distance (HantoCoordinate other) {
+		if (other != null) {
+			int deltaX = this.getX() - other.getX();
+			int deltaY = this.getY() - other.getY();
+			int signX = (int) Math.signum(deltaX);
+			int signY = (int) Math.signum(deltaY);
+
+			if (signX == 1 && signY == 1) {
+				signY = 0;
+			}
+			else if (signX == -1 && signY == -1) {
+				signY = 0;
+			}
+
+			if (deltaX == 0 && deltaY == 0) {
+				return 0;
+			}
+			else {
+				return 1 + this.distance(new HantoCoordinateImpl(other.getX() + signX, other.getY() + signY));
+			}
+		}
+		else {
+			return 0;
+		}
 	}
 
 	@Override

@@ -59,6 +59,7 @@ public class EpsilonHantoGame extends BaseHantoGame implements HantoGame {
 	}
 	
 	private void setUpAdditionalRules () {
+		ruleSet.add(new SparrowsFlyMaxFourSpaces());
 		ruleSet.add(new MustBeContinuous());
 		ruleSet.add(new NewPieceMustBeAdjacentToOwnColor());
 		ruleSet.add(new CantMakeMoveAfterGameIsOver());
@@ -66,7 +67,6 @@ public class EpsilonHantoGame extends BaseHantoGame implements HantoGame {
 		ruleSet.add(new CrabWalksOneHex());
 		ruleSet.add(new WalkersCantMoveIfBlocked());
 		ruleSet.add(new JumpersJumpCorrectly());
-		ruleSet.add(new SparrowsFlyMaxFourSpaces());
 	}
 	
 	private void setUpPieceMovements () {

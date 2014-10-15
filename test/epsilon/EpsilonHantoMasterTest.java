@@ -58,7 +58,7 @@ public class EpsilonHantoMasterTest {
 	@Test
 	public void longJumpWithHorse() throws HantoException
 	{
-		game.makeMove(HORSE, null, new HantoCoordinateImpl(0, 0));   // Blue
+		game.makeMove(BUTTERFLY, null, new HantoCoordinateImpl(0, 0));   // Blue
 		game.makeMove(BUTTERFLY, null, new HantoCoordinateImpl(0, 1)); // Red
 		game.makeMove(HORSE, null, new HantoCoordinateImpl(0, -1));   // Blue
 		game.makeMove(HORSE, null, new HantoCoordinateImpl(0, 2));   // Red
@@ -127,6 +127,37 @@ public class EpsilonHantoMasterTest {
 		game.makeMove(CRAB, null, new HantoCoordinateImpl(0, 3));   // Red
 		MoveResult r = game.makeMove(SPARROW, new HantoCoordinateImpl(-1, 0), new HantoCoordinateImpl(0, 4));   // Blue
 		assertEquals(MoveResult.OK, r);
+	}
+	
+	/**
+	 * 
+	 * @throws HantoException
+	 */
+	@Test(expected=HantoException.class)
+	public void sparrowFliesMoreThan4Spaces() throws HantoException
+	{
+		game.makeMove(BUTTERFLY, null, new HantoCoordinateImpl(0, 0));   // Blue
+		game.makeMove(CRAB, null, new HantoCoordinateImpl(-1, 1)); // Red
+		game.makeMove(CRAB, null, new HantoCoordinateImpl(1, -1));   // Blue
+		game.makeMove(SPARROW, null, new HantoCoordinateImpl(-2, 2));   // Red
+		game.makeMove(CRAB, null, new HantoCoordinateImpl(2, -2)); // Blue
+		game.makeMove(BUTTERFLY, null, new HantoCoordinateImpl(-2, 3));   // Red
+		game.makeMove(CRAB, null, new HantoCoordinateImpl(3, -2));   // Blue
+		game.makeMove(HORSE, null, new HantoCoordinateImpl(-2, 4)); // Red
+		game.makeMove(HORSE, null, new HantoCoordinateImpl(2, -1));   // Blue
+		game.makeMove(SPARROW, null, new HantoCoordinateImpl(-1, 2));   // Red
+		game.makeMove(HORSE, null, new HantoCoordinateImpl(2, -3)); // Blue
+		game.makeMove(SPARROW, new HantoCoordinateImpl(-1, 2), new HantoCoordinateImpl(4, -2));   // Red
+	}
+	
+	@Test
+	public void distanceTest()
+	{
+		HantoCoordinateImpl to = new HantoCoordinateImpl(-1, -3);
+		HantoCoordinateImpl from  = new HantoCoordinateImpl(2, 1);
+		
+		int dist = to.distance(from);
+		assertEquals(7, dist);
 	}
 	
 }
