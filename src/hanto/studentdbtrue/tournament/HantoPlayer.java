@@ -53,8 +53,7 @@ public class HantoPlayer implements HantoGamePlayer {
 		}
 		
 		factory = HantoGameFactory.getInstance();
-		game = (BaseHantoGame) factory.makeHantoGame(version, movesFirst);
-		game = new EpsilonHantoGame(movesFirst);
+		game = (EpsilonHantoGame) factory.makeHantoGame(version, movesFirst);
 
 	}
 
@@ -79,7 +78,7 @@ public class HantoPlayer implements HantoGamePlayer {
 				game.makeMove(opponentsMove.getPiece(), opponentsMove.getFrom(), opponentsMove.getTo());
 			} 
 			catch (HantoException e) {
-				System.out.println("Move was invalid.");
+				System.out.println("Opponents move was invalid.");
 			}
 			
 			List<HantoMove> validMoves = game.getAllValidMoves();
